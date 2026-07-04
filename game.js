@@ -703,6 +703,13 @@ const endlessQuestTemplates = [
   }
 ];
 
+const storyFeatureUnlocks = {
+  grand_opening: { key: "lounge", level: 1, label: "Lounge Area" },
+  build_the_vibe: { key: "snackBar", level: 1, label: "Snack Bar" },
+  munchies_make_money: { key: "stage", level: 1, label: "Stage" },
+  the_stage_is_set: { key: "security", level: 1, label: "Security Desk" }
+};
+
 const defaultState = {
   version: SAVE_VERSION,
   money: 180,
@@ -1883,6 +1890,7 @@ function completeStoryQuest(quest) {
   state.munchies = clamp(state.munchies + (rewards.munchies || 0), 0, 100);
   state.favor = clamp(state.favor + (rewards.favor || 0), 0, 100);
   state.completedStory[quest.id] = true;
+  unlockStoryFeatureForQuest(quest);
   addLog(quest.title, quest.completeLine);
   showCutscene(cutsceneForStory(quest, "complete"));
   if (quest.repeatable) {
@@ -2090,16 +2098,54 @@ function upgradeClicked(key) {
   renderAll();
 }
 
-function applyUpgrade(key, fromQuest) {
-  state.upgrades[key] += 1;
-  const level = state.upgrades[key];
-
+function applyUpgradeEffects(key) {
   if (key === "plantRows") ensurePlantSlots();
   if (key === "lounge") state.vibe = clamp(state.vibe + 6, 0, 100);
   if (key === "snackBar") state.munchies = clamp(state.munchies + 6, 0, 100);
   if (key === "stage") state.vibe = clamp(state.vibe + 4, 0, 100);
   if (key === "security") state.heat = clamp(state.heat - 8, 0, 100);
   if (key === "counter") state.reputation += 1;
+}
+
+function grantUpgradeLevel(key, targetLevel, sourceTitle, silent = false) {
+  let unlocked = false;
+  while (state.upgrades[key] < targetLevel) {
+    state.upgrades[key] += 1;
+    const level = state.upgrades[key];
+    applyUpgradeEffects(key);
+    unlocked = true;
+    if (!silent) {
+      addLog("New Area Unlocked", `${upgradeDefs[key].label} reached Level ${level}. ${sourceTitle} opened the next part of The Haven.`);
+    }
+  }
+  return unlocked;
+}
+
+function unlockStoryFeatureForQuest(quest, silent = false) {
+  const unlock = storyFeatureUnlocks[quest.id];
+  if (!unlock) return false;
+  const unlocked = grantUpgradeLevel(unlock.key, unlock.level, quest.title, silent);
+  if (unlocked && !silent) {
+    popSpark(unlock.key === "stage" ? 78 : 74, unlock.key === "security" ? 78 : 34);
+  }
+  return unlocked;
+}
+
+function repairStoryFeatureUnlocks() {
+  let repaired = false;
+  storyQuests.forEach((quest, index) => {
+    if (state.completedStory[quest.id] || state.storyQuestIndex > index) {
+      repaired = unlockStoryFeatureForQuest(quest, true) || repaired;
+    }
+  });
+  return repaired;
+}
+
+function applyUpgrade(key, fromQuest) {
+  state.upgrades[key] += 1;
+  const level = state.upgrades[key];
+
+  applyUpgradeEffects(key);
 
   addXp(fromQuest ? 28 : 10);
   addLog("Upgrade Installed", `${upgradeDefs[key].label} reached Level ${level}.`);
@@ -2754,7 +2800,9 @@ function renderQuest() {
       el.questActionButton.classList.remove("hidden");
     }
   } else if (questComplete(quest)) {
-    el.questActionButton.textContent = "Complete Quest";
+    const unlock = storyFeatureUnlocks[quest.id];
+    const unlockReady = unlock && state.upgrades[unlock.key] < unlock.level;
+    el.questActionButton.textContent = unlockReady ? `Unlock ${unlock.label}` : "Complete Quest";
     el.questActionButton.onclick = () => completeStoryQuest(quest);
     el.questActionButton.classList.remove("hidden");
   }
@@ -3232,6 +3280,12 @@ function currentTutorialTip() {
       text: "Buy Stage Gear Level 1, then use Run Event to bring in a bigger entertainment crowd."
     };
   }
+  if (quest.id === "heat_on_the_block" && state.upgrades.security < 1) {
+    return {
+      title: "Open security",
+      text: "Finish The Stage Is Set to unlock the Security Desk, then keep Heat low and customers orderly."
+    };
+  }
   if (quest.isGateQuest) {
     return {
       title: "Finish the story gate",
@@ -3332,6 +3386,7 @@ function init() {
   syncInventoryTotals();
   checkStrainUnlocks();
   ensurePlantSlots();
+  if (repairStoryFeatureUnlocks()) saveState();
   populateAvatarControls();
   bindEvents();
   renderAll();
