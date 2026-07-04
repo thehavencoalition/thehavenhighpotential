@@ -1040,6 +1040,10 @@ function characterKeyForNpc(name) {
 function createCharacterBust(character, compact = false) {
   const bust = document.createElement("div");
   bust.className = `character-bust ${compact ? "compact" : ""} hair-${character.hairClass || "fade"} expression-${character.expression || "ready"} ${character.key === "mascot" ? "mascot-bust" : ""}`;
+  if (character.key === "mascot") {
+    bust.innerHTML = `<img class="character-logo-face" src="assets/brand/haven-mascot-face.png" alt="">`;
+    return bust;
+  }
   bust.style.setProperty("--char-skin", character.skin);
   bust.style.setProperty("--char-hair", character.hair);
   bust.style.setProperty("--char-shirt", character.shirt);

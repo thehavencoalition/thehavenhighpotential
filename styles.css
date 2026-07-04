@@ -83,24 +83,67 @@ button:disabled {
   display: flex;
   align-items: center;
   min-width: 265px;
-  gap: 12px;
+  gap: 14px;
 }
 
-.brand-kicker {
-  margin: 0 0 3px;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 900;
-  text-transform: uppercase;
+.brand-mark,
+.mascot-avatar {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 0 rgba(23, 32, 51, 0.12));
+}
+
+.brand-mark {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  padding: 4px;
+  border: 3px solid rgba(23, 32, 51, 0.16);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.94), transparent 42%),
+    linear-gradient(135deg, rgba(61, 201, 212, 0.16), rgba(141, 82, 255, 0.12)),
+    rgba(255, 255, 255, 0.82);
+  object-fit: cover;
+  object-position: 50% 28%;
+}
+
+.brand-title {
+  display: grid;
+  align-items: center;
+  gap: 1px;
+}
+
+.brand-wordmark {
+  width: min(230px, 44vw);
+  height: 42px;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 5px 0 rgba(23, 32, 51, 0.1));
 }
 
 h1 {
   margin: 0;
-  color: #191a2c;
-  font-size: clamp(1.32rem, 2.3vw, 2.2rem);
+  color: #24304c;
+  font-size: clamp(1.05rem, 1.9vw, 1.7rem);
   line-height: 0.96;
   letter-spacing: 0;
-  text-shadow: 2px 2px 0 #ffffff, 4px 4px 0 rgba(61, 201, 212, 0.35);
+  text-shadow: 2px 2px 0 #ffffff, 4px 4px 0 rgba(141, 82, 255, 0.22);
+}
+
+.mascot-avatar.small {
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
+  padding: 3px;
+  border: 3px solid rgba(23, 32, 51, 0.18);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.96), transparent 46%),
+    linear-gradient(135deg, rgba(61, 201, 212, 0.2), rgba(141, 82, 255, 0.16)),
+    #ffffff;
+  object-fit: cover;
+  object-position: 50% 26%;
 }
 
 .mascot-face {
@@ -2951,6 +2994,29 @@ h1 {
   height: 68px;
 }
 
+.character-bust.mascot-bust {
+  display: grid;
+  place-items: center;
+  border-color: rgba(61, 201, 212, 0.35);
+  background:
+    radial-gradient(circle at 25% 18%, rgba(255, 255, 255, 0.96), transparent 45%),
+    linear-gradient(135deg, rgba(61, 201, 212, 0.22), rgba(141, 82, 255, 0.18)),
+    #ffffff;
+}
+
+.character-logo-face {
+  width: 128%;
+  height: 128%;
+  object-fit: cover;
+  object-position: 50% 24%;
+  filter: drop-shadow(0 6px 0 rgba(23, 32, 51, 0.1));
+}
+
+.character-bust.compact .character-logo-face {
+  width: 136%;
+  height: 136%;
+}
+
 .char-face {
   position: absolute;
   z-index: 2;
@@ -3711,11 +3777,26 @@ h1 {
 
 .cutscene-stage::before {
   position: absolute;
+  z-index: 0;
   inset: auto 8% 28px;
   height: 84px;
   content: "";
   border-radius: 50%;
   background: rgba(23, 32, 51, 0.08);
+}
+
+.cutscene-stage::after {
+  position: absolute;
+  z-index: 1;
+  right: 22px;
+  top: 18px;
+  width: 150px;
+  height: 150px;
+  content: "";
+  background: url("assets/brand/haven-high-society-logo.png") center / contain no-repeat;
+  filter: drop-shadow(0 9px 0 rgba(23, 32, 51, 0.1));
+  opacity: 0.16;
+  pointer-events: none;
 }
 
 .cutscene-stage.lounge {
@@ -3836,6 +3917,7 @@ h1 {
 
 .cutscene-set {
   position: absolute;
+  z-index: 2;
   left: 50%;
   bottom: 54px;
   width: 230px;
@@ -4084,6 +4166,22 @@ h1 {
 
   .top-bar {
     display: grid;
+  }
+
+  .brand-lockup {
+    min-width: 0;
+  }
+
+  .brand-mark {
+    flex-basis: 58px;
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+  }
+
+  .brand-wordmark {
+    width: min(210px, 58vw);
+    height: 36px;
   }
 
   .hud {
