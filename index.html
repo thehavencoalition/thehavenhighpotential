@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Haven Co: High Society Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="top-bar">
+      <section class="brand-lockup" aria-label="The Haven Co High Society">
+        <div class="mascot-face" aria-hidden="true">
+          <span class="mascot-eyes"></span>
+          <span class="mascot-smile"></span>
+        </div>
+        <div>
+          <p class="brand-kicker">The Haven Co</p>
+          <h1>High Society</h1>
+        </div>
+      </section>
+
+      <section class="hud" aria-label="Game stats">
+        <div class="hud-chip">
+          <span>Money</span>
+          <strong id="moneyValue">$0</strong>
+        </div>
+        <div class="hud-chip">
+          <span>Cash/sec</span>
+          <strong id="cashRateValue">$0/s</strong>
+        </div>
+        <div class="hud-chip">
+          <span>Level</span>
+          <strong id="levelValue">1</strong>
+        </div>
+        <div class="hud-chip">
+          <span>Rep</span>
+          <strong id="repValue">0</strong>
+        </div>
+        <div class="hud-chip heat-chip">
+          <span>Heat</span>
+          <strong id="heatValue">0</strong>
+        </div>
+      </section>
+    </header>
+
+    <section class="game-layout">
+      <section class="play-area" aria-label="The Haven Co game scene">
+        <div class="location-banner">
+          <span id="locationName">Original Haven</span>
+          <span id="legalLight" class="legal-light">Legal: Green</span>
+          <span id="sceneMood">Opening night energy</span>
+        </div>
+
+        <div class="scene" id="scene">
+          <div class="room grow-room">
+            <div class="room-header">
+              <span>Grow Side</span>
+              <strong id="growRoomLevel">Room Lv. 1</strong>
+            </div>
+            <div class="grow-fixtures">
+              <div class="fixture light-rig"></div>
+              <div class="fixture fan"></div>
+              <div class="fixture nutrient-station"></div>
+            </div>
+            <div class="plant-grid" id="plantGrid"></div>
+            <div class="workbench curing">Curing</div>
+            <div class="workbench trimming">Trim</div>
+          </div>
+
+          <div class="room haven-room">
+            <div class="room-header">
+              <span>Haven Side</span>
+              <strong id="storeRoomLevel">Store Lv. 1</strong>
+            </div>
+            <div class="counter-zone" id="counterZone">
+              <span>Counter</span>
+              <small id="stockBadge">Stock 0</small>
+            </div>
+            <div class="lounge-zone">
+              <span>Lounge</span>
+              <div class="seat-row">
+                <b></b><b></b><b></b>
+              </div>
+            </div>
+            <div class="snack-zone">
+              <span>Snack Bar</span>
+              <i></i><i></i><i></i>
+            </div>
+            <div class="stage-zone">
+              <span>Stage</span>
+              <div class="speaker left"></div>
+              <div class="speaker right"></div>
+            </div>
+            <div class="security-zone">Security</div>
+          </div>
+
+          <div class="animated-layer" id="animatedLayer"></div>
+          <div class="floating-layer" id="floatingLayer"></div>
+        </div>
+
+        <div class="meter-row" aria-label="Business meters">
+          <div class="meter-card">
+            <div class="meter-label">
+              <span>Vibe</span>
+              <strong id="vibeText">0%</strong>
+            </div>
+            <div class="meter-track"><span id="vibeBar"></span></div>
+          </div>
+          <div class="meter-card">
+            <div class="meter-label">
+              <span>Munchies</span>
+              <strong id="munchiesText">0%</strong>
+            </div>
+            <div class="meter-track munchies"><span id="munchiesBar"></span></div>
+          </div>
+          <div class="meter-card">
+            <div class="meter-label">
+              <span>Political Favor</span>
+              <strong id="favorText">0%</strong>
+            </div>
+            <div class="meter-track favor"><span id="favorBar"></span></div>
+          </div>
+        </div>
+
+        <div class="action-bar" aria-label="Main actions">
+          <button id="plantButton" class="primary-action">Plant Seeds</button>
+          <button id="harvestButton">Harvest Ready</button>
+          <button id="stockButton">Stock Counter</button>
+          <button id="snackButton">Snack Rush</button>
+          <button id="eventButton">Run Event</button>
+          <button id="hireButton">Hire Staff</button>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="Management panel">
+        <section class="panel-card quest-card">
+          <div class="panel-title">
+            <span>Current Quest</span>
+            <button id="storyButton" class="small-button">Story</button>
+          </div>
+          <h2 id="questTitle">Grand Opening</h2>
+          <p id="questDescription">Plant seeds, harvest product, and serve your first customers.</p>
+          <div id="questObjectives" class="objective-list"></div>
+          <button id="questActionButton" class="wide-button hidden">Complete Quest</button>
+        </section>
+
+        <section class="panel-card tutorial-card">
+          <div class="panel-title">
+            <span>Mascot Tutorial</span>
+            <button id="tutorialButton" class="small-button">Guide</button>
+          </div>
+          <div class="tutorial-prompt">
+            <strong id="tutorialTitle">Start the loop</strong>
+            <p id="tutorialText">Plant seeds, harvest when ready, then stock the counter so customers can buy.</p>
+          </div>
+          <div id="tutorialSteps" class="tutorial-steps"></div>
+        </section>
+
+        <section class="panel-card seed-card">
+          <div class="panel-title">
+            <span>Seed Vault</span>
+            <strong id="seedUnlockCount">0 unlocked</strong>
+          </div>
+          <div class="seed-picker">
+            <label>
+              Current Seed
+              <select id="seedSelect"></select>
+            </label>
+            <button id="seedInfoButton" class="small-button">Info</button>
+          </div>
+          <div id="seedSummary" class="seed-summary"></div>
+          <div id="seedCollection" class="seed-grid"></div>
+        </section>
+
+        <section class="panel-card avatar-card">
+          <div class="panel-title">
+            <span>Owner</span>
+            <button id="avatarRandomButton" class="small-button">Random</button>
+          </div>
+          <div class="avatar-workbench">
+            <div class="avatar-preview" id="ownerAvatarPreview" aria-label="Owner avatar preview">
+              <span class="avatar-hair"></span>
+              <span class="avatar-face"></span>
+              <span class="avatar-glasses"></span>
+              <span class="avatar-body"></span>
+              <span class="avatar-shoes"></span>
+            </div>
+            <div class="avatar-summary">
+              <input id="avatarNameInput" maxlength="18" aria-label="Owner name" value="Boss">
+              <strong id="avatarTitle">Neighborhood Charmer</strong>
+              <span id="avatarBonus">+Vibe from friendly service</span>
+            </div>
+          </div>
+          <div class="avatar-controls" aria-label="Avatar design controls">
+            <label>
+              Skin
+              <select id="avatarSkinSelect"></select>
+            </label>
+            <label>
+              Hair
+              <select id="avatarHairSelect"></select>
+            </label>
+            <label>
+              Outfit
+              <select id="avatarOutfitSelect"></select>
+            </label>
+            <label>
+              Accessory
+              <select id="avatarAccessorySelect"></select>
+            </label>
+            <label>
+              Style
+              <select id="avatarPersonalitySelect"></select>
+            </label>
+          </div>
+          <div class="closet-panel">
+            <div class="closet-header">
+              <span>Style Closet</span>
+              <strong id="closetCount">0 unlocked</strong>
+            </div>
+            <div id="closetGrid" class="closet-grid"></div>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <div class="panel-title">
+            <span>Upgrade Board</span>
+            <span class="hint">Every 5th level starts a story quest</span>
+          </div>
+          <div class="upgrade-list" id="upgradeList"></div>
+        </section>
+
+        <section class="panel-card">
+          <div class="panel-title">
+            <span>Crew</span>
+            <span id="crewCount">0 hired</span>
+          </div>
+          <div class="crew-grid" id="crewGrid"></div>
+        </section>
+
+        <section class="panel-card story-log-card">
+          <div class="panel-title">
+            <span>Story Log</span>
+            <span id="chapterName">Chapter 1</span>
+          </div>
+          <div class="story-log" id="storyLog"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <article class="dialogue-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="dialogue-speaker">
+        <div class="mascot-face small" id="modalFace" aria-hidden="true">
+          <span class="mascot-eyes"></span>
+          <span class="mascot-smile"></span>
+        </div>
+        <div>
+          <p id="modalSpeaker">Mascot</p>
+          <h2 id="modalTitle">Welcome to The Haven</h2>
+        </div>
+      </div>
+      <p id="modalText"></p>
+      <div class="modal-actions">
+        <button id="modalSecondary" class="ghost-button">Close</button>
+        <button id="modalPrimary">Start</button>
+      </div>
+    </article>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
