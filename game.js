@@ -1173,7 +1173,7 @@ function townDistrictLevel(district) {
 }
 
 function renderRoomExpansion() {
-  const classes = ["scene", "environment-3d"];
+  const classes = ["scene", "environment-3d", "concept-art-mode"];
   Object.keys(upgradeDefs).forEach((key) => {
     classes.push(`${key}-${clamp(state.upgrades[key], 0, 5)}`);
   });

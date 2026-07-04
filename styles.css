@@ -455,6 +455,187 @@ h1 {
   transform-style: preserve-3d;
 }
 
+.scene-concept,
+.room-concept-art {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.scene-concept {
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1320px;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(1.08) contrast(1.02);
+  opacity: 0;
+}
+
+.room-concept-art {
+  z-index: 0 !important;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.06) brightness(1.02);
+  opacity: 0;
+}
+
+.scene.concept-art-mode {
+  background: #172033;
+}
+
+.scene.concept-art-mode::before {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 32%),
+    radial-gradient(circle at 72% 18%, rgba(61, 201, 212, 0.12), transparent 28%),
+    linear-gradient(180deg, transparent 0%, rgba(23, 32, 51, 0.12) 100%);
+}
+
+.scene.concept-art-mode::after {
+  display: none;
+}
+
+.scene.concept-art-mode .scene-concept {
+  opacity: 0.94;
+}
+
+.scene.concept-art-mode .town-road,
+.scene.concept-art-mode .town-detail {
+  opacity: 0.08;
+}
+
+.scene.concept-art-mode .town-prop,
+.scene.concept-art-mode .town-plaza {
+  z-index: 12;
+  min-width: 92px;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: 2px solid rgba(255, 255, 255, 0.52);
+  border-radius: 999px;
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(23, 32, 51, 0.74), rgba(36, 48, 76, 0.58)),
+    rgba(23, 32, 51, 0.7);
+  box-shadow:
+    0 0 0 4px rgba(61, 201, 212, 0.14),
+    0 10px 22px rgba(23, 32, 51, 0.2);
+  text-shadow: 0 2px 0 rgba(23, 32, 51, 0.55);
+}
+
+.scene.concept-art-mode .town-plaza {
+  width: auto;
+  height: auto;
+  border-radius: 999px;
+}
+
+.scene.concept-art-mode .town-plaza::before,
+.scene.concept-art-mode .town-prop::before,
+.scene.concept-art-mode .town-prop::after,
+.scene.concept-art-mode .mural-wall::after {
+  display: none;
+}
+
+.scene.concept-art-mode .town-lot.selected {
+  outline: 4px solid rgba(245, 184, 75, 0.72);
+  outline-offset: 5px;
+  box-shadow:
+    0 0 0 9px rgba(255, 255, 255, 0.42),
+    0 0 36px rgba(61, 201, 212, 0.45),
+    0 16px 30px rgba(23, 32, 51, 0.28);
+}
+
+.scene.concept-art-mode .room {
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.56);
+  background: rgba(23, 32, 51, 0.42);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.24),
+    0 18px 38px rgba(23, 32, 51, 0.34);
+}
+
+.scene.concept-art-mode .room::before {
+  z-index: 1;
+  inset: 0;
+  height: auto;
+  border: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(23, 32, 51, 0.08), rgba(23, 32, 51, 0.16)),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.18), transparent 30%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  animation: none;
+}
+
+.scene.concept-art-mode .room::after {
+  display: none;
+}
+
+.scene.concept-art-mode .room-concept-art {
+  opacity: 0.9;
+}
+
+.scene.concept-art-mode .room-wall,
+.scene.concept-art-mode .grow-prop,
+.scene.concept-art-mode .haven-prop,
+.scene.concept-art-mode .grow-fixtures,
+.scene.concept-art-mode .bar-back-shelf,
+.scene.concept-art-mode .bar-display-cases,
+.scene.concept-art-mode .bar-stools {
+  opacity: 0.08;
+}
+
+.scene.concept-art-mode .room-header,
+.scene.concept-art-mode .counter-zone,
+.scene.concept-art-mode .grow-detail,
+.scene.concept-art-mode .workbench,
+.scene.concept-art-mode .lounge-zone,
+.scene.concept-art-mode .snack-zone,
+.scene.concept-art-mode .stage-zone,
+.scene.concept-art-mode .security-zone,
+.scene.concept-art-mode .digital-menu,
+.scene.concept-art-mode .neon-wall,
+.scene.concept-art-mode .arcade-cab,
+.scene.concept-art-mode .snack-cooler,
+.scene.concept-art-mode .stage-lights,
+.scene.concept-art-mode .camera-node,
+.scene.concept-art-mode .vip-zone {
+  z-index: 14 !important;
+  border-color: rgba(255, 255, 255, 0.42);
+  background-color: rgba(23, 32, 51, 0.68);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.12),
+    0 8px 18px rgba(23, 32, 51, 0.24);
+  backdrop-filter: blur(8px);
+}
+
+.scene.concept-art-mode .plant-grid {
+  z-index: 16 !important;
+}
+
+.scene.concept-art-mode .plant-slot {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(79, 213, 155, 0.28), transparent 33%),
+    rgba(75, 51, 34, 0.78);
+  border-color: rgba(255, 255, 255, 0.36);
+  box-shadow:
+    0 0 0 3px rgba(23, 32, 51, 0.18),
+    0 8px 16px rgba(23, 32, 51, 0.28),
+    inset 0 -8px 0 rgba(23, 32, 51, 0.15);
+}
+
+.scene.concept-art-mode .animated-layer,
+.scene.concept-art-mode .floating-layer {
+  z-index: 30;
+}
+
 .town-detail {
   position: absolute;
   z-index: 2;
@@ -3306,7 +3487,7 @@ h1 {
 
 .avatar-workbench {
   display: grid;
-  grid-template-columns: 96px 1fr;
+  grid-template-columns: 132px 1fr;
   gap: 12px;
   align-items: center;
   padding: 12px;
@@ -3314,87 +3495,124 @@ h1 {
 
 .avatar-preview {
   position: relative;
-  width: 86px;
-  height: 104px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  width: 122px;
+  height: 154px;
+  overflow: hidden;
+  border: 2px solid rgba(23, 32, 51, 0.14);
+  border-radius: 18px;
   background:
-    linear-gradient(145deg, rgba(61, 201, 212, 0.22), rgba(255, 94, 147, 0.16)),
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.9), transparent 32%),
+    linear-gradient(145deg, rgba(61, 201, 212, 0.24), rgba(141, 82, 255, 0.14), rgba(255, 94, 147, 0.12)),
     #ffffff;
-  box-shadow: inset 0 -6px 0 rgba(23, 32, 51, 0.05);
+  box-shadow:
+    0 10px 0 rgba(23, 32, 51, 0.08),
+    0 16px 26px rgba(23, 32, 51, 0.12),
+    inset 0 -10px 0 rgba(23, 32, 51, 0.05);
   --avatar-skin: #d99d74;
   --avatar-hair: #243042;
   --avatar-shirt: #3dc9d4;
   --avatar-accent: #ff5e93;
 }
 
+.avatar-preview::after {
+  position: absolute;
+  z-index: 0;
+  left: 20px;
+  right: 20px;
+  bottom: 9px;
+  height: 13px;
+  content: "";
+  border-radius: 50%;
+  background: rgba(23, 32, 51, 0.16);
+  filter: blur(1px);
+}
+
 .avatar-face {
   position: absolute;
-  left: 24px;
-  top: 18px;
-  width: 38px;
-  height: 38px;
-  border: 3px solid rgba(23, 32, 51, 0.24);
+  z-index: 4;
+  left: 34px;
+  top: 30px;
+  width: 54px;
+  height: 56px;
+  border: 4px solid rgba(23, 32, 51, 0.22);
   border-radius: 50%;
-  background: var(--avatar-skin);
+  background:
+    radial-gradient(circle at 35% 26%, rgba(255, 255, 255, 0.52), transparent 20%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), transparent 52%),
+    var(--avatar-skin);
+  box-shadow:
+    inset -7px -8px 0 rgba(23, 32, 51, 0.08),
+    0 6px 0 rgba(23, 32, 51, 0.08);
 }
 
 .avatar-face::before,
 .avatar-face::after {
   position: absolute;
-  top: 13px;
-  width: 5px;
-  height: 7px;
+  top: 20px;
+  width: 6px;
+  height: 8px;
   content: "";
   border-radius: 50%;
   background: #172033;
 }
 
 .avatar-face::before {
-  left: 10px;
+  left: 14px;
 }
 
 .avatar-face::after {
-  right: 10px;
+  right: 14px;
 }
 
 .avatar-hair {
   position: absolute;
-  z-index: 2;
-  left: 22px;
-  top: 11px;
-  width: 42px;
-  height: 22px;
-  border-radius: 22px 22px 10px 10px;
-  background: var(--avatar-hair);
+  z-index: 5;
+  left: 30px;
+  top: 20px;
+  width: 62px;
+  height: 32px;
+  border-radius: 30px 30px 13px 13px;
+  background:
+    radial-gradient(circle at 34% 18%, rgba(255, 255, 255, 0.34), transparent 19%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 55%),
+    var(--avatar-hair);
+  box-shadow:
+    inset -8px -6px 0 rgba(23, 32, 51, 0.14),
+    0 5px 0 rgba(23, 32, 51, 0.08);
 }
 
 .avatar-preview.hair-buzz .avatar-hair {
-  top: 15px;
-  height: 11px;
+  top: 28px;
+  height: 16px;
 }
 
 .avatar-preview.hair-curls .avatar-hair {
-  left: 18px;
-  width: 50px;
-  height: 25px;
+  left: 25px;
+  width: 72px;
+  height: 37px;
   border-radius: 50%;
-  box-shadow: -8px 4px 0 var(--avatar-hair), 8px 3px 0 var(--avatar-hair);
+  box-shadow:
+    -11px 7px 0 var(--avatar-hair),
+    12px 6px 0 var(--avatar-hair),
+    inset -8px -6px 0 rgba(23, 32, 51, 0.14);
 }
 
 .avatar-preview.hair-loc .avatar-hair {
-  height: 28px;
-  border-radius: 18px;
-  box-shadow: -7px 17px 0 var(--avatar-hair), 8px 17px 0 var(--avatar-hair);
+  height: 44px;
+  border-radius: 22px;
+  box-shadow:
+    -10px 27px 0 -2px var(--avatar-hair),
+    10px 27px 0 -2px var(--avatar-hair),
+    inset -8px -6px 0 rgba(23, 32, 51, 0.14);
 }
 
 .avatar-glasses {
   position: absolute;
-  z-index: 3;
-  left: 32px;
-  top: 32px;
-  width: 22px;
-  height: 8px;
+  z-index: 6;
+  left: 44px;
+  top: 52px;
+  width: 34px;
+  height: 11px;
   display: none;
   border-top: 3px solid #172033;
   border-bottom: 3px solid #172033;
@@ -3407,21 +3625,27 @@ h1 {
 
 .avatar-body {
   position: absolute;
-  left: 21px;
-  bottom: 16px;
-  width: 44px;
-  height: 45px;
-  border: 3px solid rgba(23, 32, 51, 0.22);
-  border-radius: 18px 18px 10px 10px;
-  background: linear-gradient(135deg, var(--avatar-shirt), var(--avatar-accent));
+  z-index: 3;
+  left: 32px;
+  bottom: 22px;
+  width: 58px;
+  height: 66px;
+  border: 4px solid rgba(23, 32, 51, 0.2);
+  border-radius: 24px 24px 13px 13px;
+  background:
+    radial-gradient(circle at 32% 22%, rgba(255, 255, 255, 0.28), transparent 18%),
+    linear-gradient(135deg, var(--avatar-shirt), var(--avatar-accent));
+  box-shadow:
+    inset -9px -10px 0 rgba(23, 32, 51, 0.12),
+    0 8px 0 rgba(23, 32, 51, 0.08);
 }
 
 .avatar-body::after {
   position: absolute;
-  left: 9px;
-  top: 10px;
-  width: 26px;
-  height: 7px;
+  left: 12px;
+  top: 13px;
+  width: 34px;
+  height: 9px;
   content: "";
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.48);
@@ -3457,23 +3681,26 @@ h1 {
 
 .avatar-preview.accessory-cap::before {
   position: absolute;
-  z-index: 4;
-  left: 19px;
-  top: 8px;
-  width: 47px;
-  height: 18px;
+  z-index: 7;
+  left: 28px;
+  top: 16px;
+  width: 68px;
+  height: 25px;
   content: "";
-  border-radius: 16px 16px 7px 7px;
-  background: var(--avatar-accent);
+  border: 3px solid rgba(23, 32, 51, 0.16);
+  border-radius: 22px 22px 9px 9px;
+  background:
+    radial-gradient(circle at 36% 20%, rgba(255, 255, 255, 0.34), transparent 18%),
+    var(--avatar-accent);
 }
 
 .avatar-preview.accessory-cap::after {
   position: absolute;
-  z-index: 4;
-  right: 15px;
-  top: 20px;
-  width: 19px;
-  height: 7px;
+  z-index: 7;
+  right: 18px;
+  top: 36px;
+  width: 27px;
+  height: 9px;
   content: "";
   border-radius: 999px;
   background: var(--avatar-accent);
@@ -3485,18 +3712,18 @@ h1 {
 
 .avatar-preview.accessory-shades .avatar-glasses {
   display: block;
-  height: 10px;
+  height: 13px;
   border: 0;
   background: #111827;
-  box-shadow: 17px 0 0 #111827;
+  box-shadow: 24px 0 0 #111827;
 }
 
 .avatar-preview.accessory-mic .avatar-body::before {
   position: absolute;
-  right: 5px;
-  top: 19px;
-  width: 7px;
-  height: 17px;
+  right: 8px;
+  top: 28px;
+  width: 8px;
+  height: 22px;
   content: "";
   border-radius: 999px;
   background: #172033;
@@ -3505,10 +3732,10 @@ h1 {
 
 .avatar-preview.accessory-permitPin .avatar-body::before {
   position: absolute;
-  right: 7px;
-  top: 12px;
-  width: 10px;
-  height: 10px;
+  right: 9px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
   content: "";
   border-radius: 50%;
   background: #f5b84b;
@@ -3517,13 +3744,32 @@ h1 {
 
 .avatar-shoes {
   position: absolute;
-  left: 25px;
-  bottom: 10px;
-  width: 16px;
-  height: 7px;
+  z-index: 4;
+  left: 37px;
+  bottom: 17px;
+  width: 20px;
+  height: 9px;
   border-radius: 999px;
   background: #172033;
-  box-shadow: 20px 0 0 #172033;
+  box-shadow: 28px 0 0 #172033;
+}
+
+.avatar-style-board {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 8px;
+  padding: 0 12px 12px;
+}
+
+.avatar-style-board img {
+  display: block;
+  width: 100%;
+  height: 82px;
+  border: 1px solid rgba(23, 32, 51, 0.12);
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center 38%;
+  box-shadow: 0 8px 14px rgba(23, 32, 51, 0.08);
 }
 
 .avatar-summary {
@@ -4283,6 +4529,19 @@ h1 {
   }
 
   .town-district-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar-workbench {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+
+  .avatar-preview {
+    width: 104px;
+    height: 136px;
+  }
+
+  .avatar-style-board {
     grid-template-columns: 1fr;
   }
 
