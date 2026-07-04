@@ -304,18 +304,41 @@ const characterDefs = [
 ];
 
 const roomDetailDefs = [
-  { key: "starterPots", room: "Grow Side", upgrade: "plantRows", level: 1, label: "Starter Pots", detail: "Basic rows make the grow side readable and easy to expand." },
-  { key: "brightLights", room: "Grow Side", upgrade: "growLights", level: 2, label: "Brighter Light Rig", detail: "Plants glow stronger and grow timers feel more active." },
-  { key: "irrigation", room: "Grow Side", upgrade: "plantRows", level: 3, label: "Irrigation Line", detail: "A visible water line hints that growers can automate care later." },
-  { key: "genetics", room: "Grow Side", upgrade: "growLights", level: 5, label: "Genetics Bench", detail: "Story-gated equipment supports rare seeds and signature strains." },
-  { key: "harvestCrates", room: "Grow Side", upgrade: "plantRows", level: 5, label: "Harvest Crates", detail: "Crates show the room becoming a production engine." },
-  { key: "menuBoard", room: "Haven Side", upgrade: "counter", level: 2, label: "Digital Menu", detail: "Customers can see the strain mix before checkout." },
-  { key: "neonLounge", room: "Haven Side", upgrade: "lounge", level: 1, label: "Neon Lounge Sign", detail: "The lounge starts feeling like a place to stay, not just pass through." },
-  { key: "arcadeCorner", room: "Haven Side", upgrade: "lounge", level: 3, label: "Arcade Corner", detail: "Customers linger longer, building Vibe and Munchies." },
-  { key: "snackCooler", room: "Haven Side", upgrade: "snackBar", level: 2, label: "Drink Cooler", detail: "Snack Rushes look and pay better once the cooler appears." },
-  { key: "stageLights", room: "Haven Side", upgrade: "stage", level: 2, label: "Stage Lights", detail: "Events become visually obvious and pull more traffic." },
-  { key: "cameraNode", room: "Haven Side", upgrade: "security", level: 1, label: "Security Camera", detail: "The legal warning light feels tied to visible compliance tools." },
-  { key: "vipCorner", room: "Haven Side", upgrade: "stage", level: 5, label: "VIP Corner", detail: "A late-stage expansion area for High Society nights." }
+  { key: "growLightClamps", room: "Grow Warehouse", upgrade: "growLights", level: 1, label: "Clamp Lights", detail: "Starter fixtures brighten the first beds and make seed timers easier to read." },
+  { key: "growLightRig", room: "Grow Warehouse", upgrade: "growLights", level: 2, label: "Brighter Light Rig", detail: "Plants glow stronger and the room starts feeling like a real production space." },
+  { key: "fanTunedGlow", room: "Grow Warehouse", upgrade: "growLights", level: 3, label: "Fan-Tuned Glow", detail: "Light and airflow upgrades add a busier machine-room feel." },
+  { key: "timerRail", room: "Grow Warehouse", upgrade: "growLights", level: 4, label: "Timer Rail", detail: "Automation panels show that the grow side can run smoother while idle." },
+  { key: "miraConsole", room: "Grow Warehouse", upgrade: "growLights", level: 5, label: "Mira's Light Console", detail: "Story-gated lighting tech unlocks the first serious rare-strain setup." },
+  { key: "starterPots", room: "Grow Warehouse", upgrade: "plantRows", level: 1, label: "Starter Pots", detail: "Basic rows make the grow side readable and easy to expand." },
+  { key: "raisedBeds", room: "Grow Warehouse", upgrade: "plantRows", level: 2, label: "Raised Beds", detail: "Rows become cleaner, denser, and easier for growers to tend." },
+  { key: "irrigation", room: "Grow Warehouse", upgrade: "plantRows", level: 3, label: "Irrigation Line", detail: "Visible water lines hint that growers can automate care later." },
+  { key: "propagationRack", room: "Grow Warehouse", upgrade: "plantRows", level: 4, label: "Propagation Rack", detail: "Seedlings and spare trays make the warehouse feel alive between harvests." },
+  { key: "harvestCrates", room: "Grow Warehouse", upgrade: "plantRows", level: 5, label: "Harvest Crates", detail: "Story-gated crates show the room becoming a true production engine." },
+  { key: "starterRegister", room: "Haven Bar", upgrade: "counter", level: 1, label: "Starter Register", detail: "The first counter keeps customers moving and gives the bar a clear service point." },
+  { key: "menuBoard", room: "Haven Bar", upgrade: "counter", level: 2, label: "Digital Menu", detail: "Customers can see the strain mix before checkout." },
+  { key: "productDisplays", room: "Haven Bar", upgrade: "counter", level: 3, label: "Product Displays", detail: "Glass cases and shelves make the stock feel valuable and visible." },
+  { key: "expressLane", room: "Haven Bar", upgrade: "counter", level: 4, label: "Express Lane", detail: "The line moves faster, reducing impatience during rushes." },
+  { key: "savCheckout", room: "Haven Bar", upgrade: "counter", level: 5, label: "Sav's Checkout Plan", detail: "Story-gated counter flow turns the front bar into a professional sales station." },
+  { key: "neonLounge", room: "Lounge", upgrade: "lounge", level: 1, label: "Neon Lounge Sign", detail: "The lounge starts feeling like a place to stay, not just pass through." },
+  { key: "couchSet", room: "Lounge", upgrade: "lounge", level: 2, label: "Couch Set", detail: "Better seating raises Vibe and keeps customers hanging out." },
+  { key: "arcadeCorner", room: "Lounge", upgrade: "lounge", level: 3, label: "Arcade Corner", detail: "Customers linger longer, building Vibe and Munchies." },
+  { key: "vipSofas", room: "Lounge", upgrade: "lounge", level: 4, label: "VIP Sofas", detail: "Regulars and VIPs have a reason to stay and tip bigger." },
+  { key: "velmaWall", room: "Lounge", upgrade: "lounge", level: 5, label: "Velma's Vibe Wall", detail: "Story-gated decor makes the lounge feel like the neighborhood living room." },
+  { key: "chipRack", room: "Snack Bar", upgrade: "snackBar", level: 1, label: "Chip Rack", detail: "The Snack Rush loop unlocks and customers finally have somewhere to spend Munchies." },
+  { key: "snackCooler", room: "Snack Bar", upgrade: "snackBar", level: 2, label: "Drink Cooler", detail: "Snack Rushes look and pay better once the cooler appears." },
+  { key: "nachoStation", room: "Snack Bar", upgrade: "snackBar", level: 3, label: "Nacho Station", detail: "Warm snacks add comedy, mess, and a better munchies payout." },
+  { key: "premiumCase", room: "Snack Bar", upgrade: "snackBar", level: 4, label: "Premium Munchie Case", detail: "The snack bar becomes a real second revenue stream." },
+  { key: "novaRushCounter", room: "Snack Bar", upgrade: "snackBar", level: 5, label: "Nova's Rush Counter", detail: "Story-gated service gear turns snack rushes into a feature event." },
+  { key: "openMic", room: "Stage", upgrade: "stage", level: 1, label: "Open Mic Corner", detail: "Events unlock and the room gets a public reason to gather." },
+  { key: "stageLights", room: "Stage", upgrade: "stage", level: 2, label: "Stage Lights", detail: "Events become visually obvious and pull more traffic." },
+  { key: "djBooth", room: "Stage", upgrade: "stage", level: 3, label: "DJ Booth", detail: "Music nights build bigger Vibe spikes and stronger crowds." },
+  { key: "crowdRail", room: "Stage", upgrade: "stage", level: 4, label: "Crowd Rail", detail: "Crowds feel organized instead of chaotic, keeping heat manageable." },
+  { key: "vipCorner", room: "Stage", upgrade: "stage", level: 5, label: "VIP Corner", detail: "Story-gated VIP space unlocks High Society night energy." },
+  { key: "cameraNode", room: "Security", upgrade: "security", level: 1, label: "Security Camera", detail: "The legal warning light feels tied to visible compliance tools." },
+  { key: "checkInDesk", room: "Security", upgrade: "security", level: 2, label: "Check-In Desk", detail: "Door flow becomes cleaner and customers feel easier to manage." },
+  { key: "paperworkStation", room: "Security", upgrade: "security", level: 3, label: "Paperwork Station", detail: "Inspections feel like a gameplay system instead of a random punishment." },
+  { key: "crowdRopes", room: "Security", upgrade: "security", level: 4, label: "Crowd Control Rope", detail: "Busy events stay orderly and the legal light calms down faster." },
+  { key: "julesHub", room: "Security", upgrade: "security", level: 5, label: "Jules' Compliance Hub", detail: "Story-gated security makes spies and inspections feel fairer to handle." }
 ];
 
 const townDistrictDefs = [
@@ -383,6 +406,58 @@ const townDistrictDefs = [
     detail: "Street art, brand energy, and a reminder that High Society should feel like a place."
   }
 ];
+
+const townStepDefs = {
+  haven: [
+    { level: 1, label: "Corner Storefront", detail: "One bar counter, a tiny line, and the first regulars." },
+    { level: 2, label: "Bud Bar Stools", detail: "Seats fill in, product displays improve, and promos pull steadier traffic." },
+    { level: 3, label: "Lounge Glow", detail: "The Haven starts reading as a social club, not just a shop." },
+    { level: 4, label: "Event Bar", detail: "Stage nights and snack rushes make the storefront feel busy all day." },
+    { level: 5, label: "High Society Flagship", detail: "The original location becomes the brand anchor for expansion." }
+  ],
+  grow: [
+    { level: 1, label: "Garage Grow", detail: "Starter beds and clamp lights keep the first harvests simple." },
+    { level: 2, label: "Raised Warehouse", detail: "Cleaner rows, wider paths, and better airflow make the warehouse readable." },
+    { level: 3, label: "Auto Irrigation", detail: "Water lines and timers make idle growth feel more believable." },
+    { level: 4, label: "Processing Wing", detail: "Trim tables, drying racks, and crates support bigger harvest loops." },
+    { level: 5, label: "Signature Lab", detail: "Genetics gear prepares the Haven signature strain chapter." }
+  ],
+  square: [
+    { level: 1, label: "Flyer Table", detail: "The first public pop-up gives the brand a friendly face." },
+    { level: 2, label: "Weekend Pop-Up", detail: "Crowds gather more often and reputation starts compounding." },
+    { level: 3, label: "Street Fair Booth", detail: "Events spill into town and create stronger community buzz." },
+    { level: 4, label: "Block Party Permit", detail: "Bigger crowds bring bigger rewards and more noise risk." },
+    { level: 5, label: "High Society Festival", detail: "Town Square becomes the public celebration hub." }
+  ],
+  cityHall: [
+    { level: 1, label: "Intake Window", detail: "Basic paperwork reduces panic when the warning light shifts." },
+    { level: 2, label: "Permit Binder", detail: "Compliance upgrades lower inspection pressure." },
+    { level: 3, label: "Council Ally", detail: "Political favor starts opening bigger story choices." },
+    { level: 4, label: "Zoning Review", detail: "Expansion approvals become a visible town goal." },
+    { level: 5, label: "Expansion Approval", detail: "City Hall becomes the gateway to new Haven locations." }
+  ],
+  park: [
+    { level: 1, label: "Cleanup Table", detail: "Friendly neighborhood work lowers heat and adds goodwill." },
+    { level: 2, label: "Picnic Spot", detail: "Customers see The Haven supporting the block." },
+    { level: 3, label: "Community Garden", detail: "The park becomes a trust-building counterweight to legal pressure." },
+    { level: 4, label: "Neighbor Day", detail: "Goodwill converts into stronger reviews and safer events." },
+    { level: 5, label: "Green Ribbon Park", detail: "The neighborhood publicly backs the brand." }
+  ],
+  delivery: [
+    { level: 1, label: "Snack Drop", detail: "Small deliveries keep the snack bar from stalling." },
+    { level: 2, label: "Supply Racks", detail: "Spare shelves and coolers make restocking feel physical." },
+    { level: 3, label: "Part Crates", detail: "Upgrade pieces appear more naturally during story gates." },
+    { level: 4, label: "Loading Bay", detail: "Bigger events and snack rushes can be supported." },
+    { level: 5, label: "Regional Route", detail: "The delivery yard is ready for multi-location expansion." }
+  ],
+  mural: [
+    { level: 1, label: "Primer Wall", detail: "A blank wall becomes the first visible brand canvas." },
+    { level: 2, label: "Neon Tag", detail: "Purple and cyan street art starts matching the logo energy." },
+    { level: 3, label: "Community Wall", detail: "Customers and neighbors treat the mural as a town landmark." },
+    { level: 4, label: "Photo Spot", detail: "Influencers and VIPs create more reputation from events." },
+    { level: 5, label: "High Society Gateway", detail: "The mural becomes the signature visual for the whole district." }
+  ]
+};
 
 const strainDefs = [
   { key: "blueDream", name: "Blue Dream", type: "Hybrid", rarity: "common", unlock: { type: "starter" }, grow: 1, yield: 1, price: 1, vibe: 2, munchies: 1, color: "#4aa7ff", flavor: "berry haze" },
@@ -1067,6 +1142,36 @@ function upcomingRoomDetail(key) {
   return roomDetailDefs.find((detail) => detail.upgrade === key && state.upgrades[key] < detail.level);
 }
 
+function levelFromThresholds(value, thresholds) {
+  let level = 1;
+  thresholds.forEach((threshold, index) => {
+    if (value >= threshold) level = index + 1;
+  });
+  return clamp(level, 1, thresholds.length);
+}
+
+function townDistrictLevel(district) {
+  if (district.key === "grow") {
+    return levelFromThresholds(state.upgrades.growLights + state.upgrades.plantRows, [2, 4, 6, 8, 10]);
+  }
+  if (district.key === "haven") {
+    const score = state.upgrades.counter + state.upgrades.lounge + state.upgrades.snackBar + state.upgrades.stage + state.upgrades.security;
+    return levelFromThresholds(score, [1, 5, 10, 16, 25]);
+  }
+  if (district.key === "square") return levelFromThresholds(state.reputation, [0, 10, 22, 40, 65]);
+  if (district.key === "cityHall") return levelFromThresholds(state.favor, [0, 12, 28, 50, 78]);
+  if (district.key === "park") {
+    const trustScore = state.reputation + Math.max(0, 35 - state.heat) / 3;
+    return levelFromThresholds(trustScore, [0, 12, 26, 44, 70]);
+  }
+  if (district.key === "delivery") {
+    const supplyScore = state.upgrades.snackBar * 4 + (state.metrics.townActions || 0) + state.metrics.partsFound * 2;
+    return levelFromThresholds(supplyScore, [0, 8, 18, 32, 50]);
+  }
+  if (district.key === "mural") return levelFromThresholds(state.vibe, [0, 18, 36, 58, 82]);
+  return 1;
+}
+
 function renderRoomExpansion() {
   const classes = ["scene", "environment-3d"];
   Object.keys(upgradeDefs).forEach((key) => {
@@ -1080,18 +1185,30 @@ function renderRoomExpansion() {
 
 function renderRoomDetails() {
   const active = activeRoomDetails();
-  el.roomDetailCount.textContent = `${active.length}/${roomDetailDefs.length} active`;
+  el.roomDetailCount.textContent = `${active.length}/${roomDetailDefs.length} steps`;
   el.roomDetailList.innerHTML = "";
-  roomDetailDefs.forEach((detail) => {
-    const unlocked = state.upgrades[detail.upgrade] >= detail.level;
-    const item = document.createElement("div");
-    item.className = `room-detail-item ${unlocked ? "active" : ""}`;
-    item.innerHTML = `
-      <strong>${detail.label}</strong>
-      <span>${detail.room} - ${upgradeDefs[detail.upgrade].label} Lv. ${detail.level}</span>
-      <small>${unlocked ? detail.detail : "Locked until this upgrade level."}</small>
+  Object.entries(upgradeDefs).forEach(([key, def]) => {
+    const steps = roomDetailDefs.filter((detail) => detail.upgrade === key);
+    const unlockedCount = steps.filter((detail) => state.upgrades[key] >= detail.level).length;
+    const group = document.createElement("section");
+    group.className = "room-detail-group";
+    group.innerHTML = `
+      <div class="room-detail-group-header">
+        <strong>${def.label}</strong>
+        <span>${def.zone} - ${unlockedCount}/${steps.length}</span>
+      </div>
+      ${steps.map((detail) => {
+        const unlocked = state.upgrades[key] >= detail.level;
+        return `
+          <div class="room-detail-item ${unlocked ? "active" : ""}">
+            <strong>Lv. ${detail.level} - ${detail.label}</strong>
+            <span>${detail.room}</span>
+            <small>${unlocked ? detail.detail : "Locked until this upgrade level."}</small>
+          </div>
+        `;
+      }).join("")}
     `;
-    el.roomDetailList.appendChild(item);
+    el.roomDetailList.appendChild(group);
   });
 }
 
@@ -1124,13 +1241,14 @@ function townActionCost(district = currentTownDistrict()) {
 }
 
 function townDistrictStat(district) {
-  if (district.key === "grow") return `${plantedPlantCount()} tending`;
-  if (district.key === "haven") return `${state.inventory.shelfStock} stocked`;
-  if (district.key === "square") return `${Math.floor(state.reputation)} rep`;
-  if (district.key === "cityHall") return `${Math.floor(state.favor)} favor`;
-  if (district.key === "park") return `${percentText(state.heat)} heat`;
-  if (district.key === "delivery") return `${state.inventory.snacks} snacks`;
-  return `${percentText(state.vibe)} vibe`;
+  const level = townDistrictLevel(district);
+  if (district.key === "grow") return `Lv ${level} - ${plantedPlantCount()} tending`;
+  if (district.key === "haven") return `Lv ${level} - ${state.inventory.shelfStock} stocked`;
+  if (district.key === "square") return `Lv ${level} - ${Math.floor(state.reputation)} rep`;
+  if (district.key === "cityHall") return `Lv ${level} - ${Math.floor(state.favor)} favor`;
+  if (district.key === "park") return `Lv ${level} - ${percentText(state.heat)} heat`;
+  if (district.key === "delivery") return `Lv ${level} - ${state.inventory.snacks} snacks`;
+  return `Lv ${level} - ${percentText(state.vibe)} vibe`;
 }
 
 function selectTownDistrict(key) {
@@ -1150,6 +1268,8 @@ function updateTownActionButton() {
 
 function renderTownMap() {
   const district = currentTownDistrict();
+  const districtLevel = townDistrictLevel(district);
+  const steps = townStepDefs[district.key] || [];
   el.townFocusName.textContent = district.label;
   el.townDistrictGrid.innerHTML = "";
   townDistrictDefs.forEach((item) => {
@@ -1171,6 +1291,15 @@ function renderTownMap() {
     <div class="town-stat-row">
       <span>${townDistrictStat(district)}</span>
       <span>${district.actionLabel}</span>
+    </div>
+    <div class="town-step-list" aria-label="${district.label} upgrade steps">
+      ${steps.map((step) => `
+        <div class="town-step ${districtLevel >= step.level ? "active" : ""}">
+          <strong>Lv. ${step.level}</strong>
+          <span>${step.label}</span>
+          <small>${districtLevel >= step.level ? step.detail : "Keep upgrading and running town actions to reveal this step."}</small>
+        </div>
+      `).join("")}
     </div>
   `;
 
