@@ -368,6 +368,29 @@ h1 {
   box-shadow: 0 8px 14px rgba(23, 32, 51, 0.1);
 }
 
+.town-lot {
+  min-height: 0;
+  padding: 0;
+  font: 900 0.64rem/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, outline-color 160ms ease;
+}
+
+.town-lot:hover {
+  transform: translateY(-1px);
+}
+
+.town-lot.selected {
+  outline: 4px solid rgba(245, 184, 75, 0.5);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.58), 0 14px 24px rgba(23, 32, 51, 0.16);
+}
+
+.room.town-lot:hover {
+  transform: translateY(-1px);
+}
+
 .town-plaza {
   left: calc(50% - 58px);
   top: 462px;
@@ -1699,6 +1722,127 @@ h1 {
   color: #16623e;
   background: #e8fff3;
   border-color: rgba(22, 98, 62, 0.18);
+}
+
+.town-card {
+  padding-bottom: 12px;
+}
+
+.town-district-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  padding: 12px;
+}
+
+.town-district {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px 8px;
+  align-items: center;
+  min-height: 62px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: #172033;
+  background: #ffffff;
+  box-shadow: none;
+  text-align: left;
+}
+
+.town-district strong {
+  grid-row: 1 / span 2;
+  display: grid;
+  min-height: 38px;
+  place-items: center;
+  border-radius: 8px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #238b57, #3dc9d4);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.town-district span,
+.town-district small {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.town-district span {
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.town-district small {
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+.town-district.active {
+  border-color: rgba(141, 82, 255, 0.42);
+  background: linear-gradient(135deg, #ffffff, #f3efff);
+}
+
+.town-district.active strong {
+  background: linear-gradient(135deg, #8d52ff, #ff5e93);
+}
+
+.town-focus {
+  margin: 0 12px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.town-focus strong,
+.town-focus p {
+  display: block;
+  margin: 0;
+}
+
+.town-focus strong {
+  font-size: 0.88rem;
+}
+
+.town-focus p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.town-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.town-stat-row span {
+  padding: 5px 7px;
+  border-radius: 999px;
+  color: #16623e;
+  background: #e8fff3;
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.town-action-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 10px 12px 0;
+}
+
+.town-action-row button:first-child {
+  background: linear-gradient(135deg, #238b57, #4fd59b);
 }
 
 .seed-card {
@@ -3055,6 +3199,10 @@ h1 {
   }
 
   .seed-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .town-district-grid {
     grid-template-columns: 1fr;
   }
 

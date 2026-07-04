@@ -55,12 +55,12 @@
         <div class="scene" id="scene">
           <div class="town-road main-street"></div>
           <div class="town-road cross-street"></div>
-          <div class="town-plaza">Town Square</div>
-          <div class="town-prop city-hall">City Hall</div>
-          <div class="town-prop community-park">Park</div>
-          <div class="town-prop delivery-yard">Delivery</div>
-          <div class="town-prop mural-wall">Mural</div>
-          <div class="room grow-room">
+          <button class="town-plaza town-lot" data-district="square" type="button">Town Square</button>
+          <button class="town-prop city-hall town-lot" data-district="cityHall" type="button">City Hall</button>
+          <button class="town-prop community-park town-lot" data-district="park" type="button">Park</button>
+          <button class="town-prop delivery-yard town-lot" data-district="delivery" type="button">Delivery</button>
+          <button class="town-prop mural-wall town-lot" data-district="mural" type="button">Mural</button>
+          <div class="room grow-room town-lot" data-district="grow" role="button" tabindex="0">
             <div class="room-header">
               <span>Grow Warehouse</span>
               <strong id="growRoomLevel">Room Lv. 1</strong>
@@ -78,7 +78,7 @@
             <div class="workbench trimming">Trim</div>
           </div>
 
-          <div class="room haven-room">
+          <div class="room haven-room town-lot" data-district="haven" role="button" tabindex="0">
             <div class="room-header">
               <span>Haven Block</span>
               <strong id="storeRoomLevel">Store Lv. 1</strong>
@@ -181,6 +181,19 @@
             <p id="tutorialText">Plant seeds, harvest when ready, then stock the counter so customers can buy.</p>
           </div>
           <div id="tutorialSteps" class="tutorial-steps"></div>
+        </section>
+
+        <section class="panel-card town-card">
+          <div class="panel-title">
+            <span>Town Map</span>
+            <strong id="townFocusName">Haven Bar</strong>
+          </div>
+          <div id="townDistrictGrid" class="town-district-grid"></div>
+          <div class="town-focus" id="townFocusSummary"></div>
+          <div class="town-action-row">
+            <button id="townPrimaryButton">Run Action</button>
+            <button id="townSceneButton" class="small-button">Scene</button>
+          </div>
         </section>
 
         <section class="panel-card seed-card">

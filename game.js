@@ -57,6 +57,11 @@ const el = {
   tutorialTitle: document.getElementById("tutorialTitle"),
   tutorialText: document.getElementById("tutorialText"),
   tutorialSteps: document.getElementById("tutorialSteps"),
+  townDistrictGrid: document.getElementById("townDistrictGrid"),
+  townFocusName: document.getElementById("townFocusName"),
+  townFocusSummary: document.getElementById("townFocusSummary"),
+  townPrimaryButton: document.getElementById("townPrimaryButton"),
+  townSceneButton: document.getElementById("townSceneButton"),
   seedSelect: document.getElementById("seedSelect"),
   seedInfoButton: document.getElementById("seedInfoButton"),
   seedSummary: document.getElementById("seedSummary"),
@@ -80,7 +85,7 @@ const el = {
 };
 
 const SAVE_KEY = "havenHighSocietyPrototype";
-const SAVE_VERSION = 6;
+const SAVE_VERSION = 7;
 
 const upgradeDefs = {
   growLights: {
@@ -311,6 +316,72 @@ const roomDetailDefs = [
   { key: "stageLights", room: "Haven Side", upgrade: "stage", level: 2, label: "Stage Lights", detail: "Events become visually obvious and pull more traffic." },
   { key: "cameraNode", room: "Haven Side", upgrade: "security", level: 1, label: "Security Camera", detail: "The legal warning light feels tied to visible compliance tools." },
   { key: "vipCorner", room: "Haven Side", upgrade: "stage", level: 5, label: "VIP Corner", detail: "A late-stage expansion area for High Society nights." }
+];
+
+const townDistrictDefs = [
+  {
+    key: "haven",
+    label: "Haven Bar",
+    short: "Serve",
+    actionLabel: "Run Bar Promo",
+    cost: 36,
+    spark: [72, 30],
+    detail: "The social heart of The Haven: shelves stocked, bar stools full, and customers drifting toward the lounge."
+  },
+  {
+    key: "grow",
+    label: "Grow Warehouse",
+    short: "Grow",
+    actionLabel: "Tend Rows",
+    cost: 24,
+    spark: [25, 28],
+    detail: "The production lot. Quick tending pushes planted rows forward and makes the grow side feel active."
+  },
+  {
+    key: "square",
+    label: "Town Square",
+    short: "Crowd",
+    actionLabel: "Host Pop-Up",
+    cost: 48,
+    spark: [50, 68],
+    detail: "A public gathering spot for friendly neighborhood buzz, small events, and a little reputation."
+  },
+  {
+    key: "cityHall",
+    label: "City Hall",
+    short: "Favor",
+    actionLabel: "File Paperwork",
+    cost: 62,
+    spark: [13, 88],
+    detail: "The official side of town. Paperwork is boring, which is exactly why it lowers heat."
+  },
+  {
+    key: "park",
+    label: "Community Park",
+    short: "Trust",
+    actionLabel: "Cleanup Day",
+    cost: 42,
+    spark: [31, 88],
+    detail: "Neighborhood goodwill lives here. Keep the block happy and the warning light less dramatic."
+  },
+  {
+    key: "delivery",
+    label: "Delivery Yard",
+    short: "Supplies",
+    actionLabel: "Supply Run",
+    cost: 74,
+    spark: [66, 88],
+    detail: "A back-lot supply route for snacks, spare parts, and the occasional suspiciously useful box."
+  },
+  {
+    key: "mural",
+    label: "Mural Wall",
+    short: "Style",
+    actionLabel: "Paint Fresh Mural",
+    cost: 58,
+    spark: [86, 88],
+    detail: "Street art, brand energy, and a reminder that High Society should feel like a place."
+  }
 ];
 
 const strainDefs = [
@@ -691,6 +762,7 @@ const defaultState = {
   activeGateQuest: null,
   completedGates: {},
   completedStory: {},
+  townFocus: "haven",
   metrics: {
     planted: 0,
     harvested: 0,
@@ -702,7 +774,8 @@ const defaultState = {
     events: 0,
     hires: 0,
     partsFound: 0,
-    spiesHandled: 0
+    spiesHandled: 0,
+    townActions: 0
   },
   storyLog: [],
   activeEventSeconds: 0,
@@ -1008,6 +1081,185 @@ function renderRoomDetails() {
       <small>${unlocked ? detail.detail : "Locked until this upgrade level."}</small>
     `;
     el.roomDetailList.appendChild(item);
+  });
+}
+
+function townDistrictByKey(key) {
+  return townDistrictDefs.find((district) => district.key === key) || townDistrictDefs[0];
+}
+
+function currentTownDistrict() {
+  if (!townDistrictDefs.some((district) => district.key === state.townFocus)) {
+    state.townFocus = "haven";
+  }
+  return townDistrictByKey(state.townFocus);
+}
+
+function plantedPlantCount() {
+  return state.plants.filter((plant) => plant.planted && !plant.ready).length;
+}
+
+function townActionCost(district = currentTownDistrict()) {
+  const scale = 1 + Math.floor((state.metrics.townActions || 0) / 8) * 0.12;
+  return Math.floor(district.cost * scale);
+}
+
+function townDistrictStat(district) {
+  if (district.key === "grow") return `${plantedPlantCount()} tending`;
+  if (district.key === "haven") return `${state.inventory.shelfStock} stocked`;
+  if (district.key === "square") return `${Math.floor(state.reputation)} rep`;
+  if (district.key === "cityHall") return `${Math.floor(state.favor)} favor`;
+  if (district.key === "park") return `${percentText(state.heat)} heat`;
+  if (district.key === "delivery") return `${state.inventory.snacks} snacks`;
+  return `${percentText(state.vibe)} vibe`;
+}
+
+function selectTownDistrict(key) {
+  state.townFocus = townDistrictByKey(key).key;
+  saveState();
+  renderTownMap();
+}
+
+function updateTownActionButton() {
+  const district = currentTownDistrict();
+  const cost = townActionCost(district);
+  const needsPlants = district.key === "grow" && plantedPlantCount() === 0;
+  el.townPrimaryButton.textContent = needsPlants ? "Plant Rows First" : `${district.actionLabel} ${moneyText(cost)}`;
+  el.townPrimaryButton.disabled = needsPlants || state.money < cost;
+}
+
+function renderTownMap() {
+  const district = currentTownDistrict();
+  el.townFocusName.textContent = district.label;
+  el.townDistrictGrid.innerHTML = "";
+  townDistrictDefs.forEach((item) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `town-district ${item.key === district.key ? "active" : ""}`;
+    button.innerHTML = `
+      <strong>${item.short}</strong>
+      <span>${item.label}</span>
+      <small>${townDistrictStat(item)}</small>
+    `;
+    button.addEventListener("click", () => selectTownDistrict(item.key));
+    el.townDistrictGrid.appendChild(button);
+  });
+
+  el.townFocusSummary.innerHTML = `
+    <strong>${district.label}</strong>
+    <p>${district.detail}</p>
+    <div class="town-stat-row">
+      <span>${townDistrictStat(district)}</span>
+      <span>${district.actionLabel}</span>
+    </div>
+  `;
+
+  document.querySelectorAll("[data-district]").forEach((lot) => {
+    const active = lot.dataset.district === district.key;
+    lot.classList.toggle("selected", active);
+    lot.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+  updateTownActionButton();
+}
+
+function runTownAction() {
+  const district = currentTownDistrict();
+  const cost = townActionCost(district);
+  if (district.key === "grow" && plantedPlantCount() === 0) {
+    showDialogue({
+      speaker: "Mira Watts",
+      title: "Rows Need Plants",
+      text: "The crew is ready to tend the warehouse, but the beds need seeds first. Plant a batch, then use the town action to push it forward.",
+      primary: "Got It"
+    });
+    return;
+  }
+  if (!spendMoney(cost)) return;
+
+  let title = district.label;
+  let text = "";
+  if (district.key === "grow") {
+    let boosted = 0;
+    state.plants.forEach((plant) => {
+      if (!plant.planted || plant.ready) return;
+      plant.progress = clamp(plant.progress + 0.22 + state.upgrades.growLights * 0.01, 0, 1);
+      plant.stage = Math.min(6, Math.floor(plant.progress * 7));
+      plant.ready = plant.progress >= 1;
+      boosted += 1;
+    });
+    text = `${boosted} planted row${boosted === 1 ? "" : "s"} got a warehouse tending boost.`;
+  } else if (district.key === "haven") {
+    for (let i = 0; i < 3; i += 1) spawnCustomer(true);
+    state.vibe = clamp(state.vibe + 4, 0, 100);
+    state.heat = clamp(state.heat + 1.5 * avatarHeatMultiplier(), 0, 100);
+    text = "A quick bar promo pulled new customers toward the shelves and stools.";
+  } else if (district.key === "square") {
+    for (let i = 0; i < 2; i += 1) spawnCustomer(true);
+    state.reputation += 2.5;
+    state.vibe = clamp(state.vibe + 3, 0, 100);
+    state.heat = clamp(state.heat + 2 * avatarHeatMultiplier(), 0, 100);
+    text = "The Town Square pop-up brought friendly neighborhood attention and a little extra noise.";
+  } else if (district.key === "cityHall") {
+    state.heat = clamp(state.heat - 9, 0, 100);
+    state.favor = clamp(state.favor + 4, 0, 100);
+    text = "Paperwork filed. It was boring, official, and exactly what the warning light needed.";
+  } else if (district.key === "park") {
+    state.reputation += 2;
+    state.vibe = clamp(state.vibe + 4, 0, 100);
+    state.heat = clamp(state.heat - 2, 0, 100);
+    text = "Cleanup day made the block warmer toward The Haven.";
+  } else if (district.key === "delivery") {
+    const snacks = 18 + state.upgrades.snackBar * 3;
+    state.inventory.snacks += snacks;
+    if (state.activeGateQuest) {
+      state.activeGateQuest.partsFound = (state.activeGateQuest.partsFound || 0) + 1;
+      state.metrics.partsFound += 1;
+      text = `${snacks} snacks arrived, plus one useful upgrade piece from the delivery stack.`;
+    } else {
+      text = `${snacks} snacks arrived for the bar. The delivery yard looks suspiciously organized.`;
+    }
+  } else if (district.key === "mural") {
+    state.vibe = clamp(state.vibe + 7, 0, 100);
+    state.reputation += 2;
+    text = "Fresh mural work gave the block more color and The Haven more identity.";
+  }
+
+  state.metrics.townActions = (state.metrics.townActions || 0) + 1;
+  addXp(8);
+  addLog(title, text);
+  popSpark(district.spark[0], district.spark[1]);
+  renderAll();
+}
+
+function showTownDistrictScene() {
+  const district = currentTownDistrict();
+  const cast = {
+    grow: ["mira", "owner"],
+    haven: ["mascot", "owner"],
+    square: ["imani", "owner"],
+    cityHall: ["imani", "owner"],
+    park: ["darnell", "owner"],
+    delivery: ["nova", "owner"],
+    mural: ["velma", "owner"]
+  }[district.key] || ["mascot", "owner"];
+  showCutscene({
+    title: district.label,
+    location: "Haven Town Map",
+    sceneClass: district.key === "grow" ? "grow" : district.key === "cityHall" ? "heat" : "cast",
+    left: cast[0],
+    right: cast[1],
+    beats: [
+      {
+        speaker: resolveCharacter(cast[0]).name,
+        title: district.actionLabel,
+        line: district.detail
+      },
+      {
+        speaker: "Haven Mascot",
+        title: "Town Gameplay",
+        line: `Use ${district.actionLabel} when you want this district to push the business loop. The town is starting to matter now.`
+      }
+    ]
   });
 }
 
@@ -2849,6 +3101,7 @@ function renderHud() {
   const hireCost = 90 + Object.values(state.staff).reduce((sum, value) => sum + value, 0) * 68;
   el.hireButton.textContent = `Hire Staff ${moneyText(hireCost)}`;
   el.hireButton.disabled = state.money < hireCost;
+  updateTownActionButton();
 }
 
 function renderAll() {
@@ -2861,6 +3114,7 @@ function renderAll() {
   renderCloset();
   renderSeedVault();
   renderRoomExpansion();
+  renderTownMap();
   renderPlants();
   renderUpgrades();
   renderRoomDetails();
@@ -2985,8 +3239,8 @@ function currentTutorialTip() {
     };
   }
   return {
-    title: "Grow, stock, upgrade",
-    text: "Pick seeds, keep the counter stocked, watch the warning light, and use upgrades to unlock the next room feature."
+    title: "Use the town map",
+    text: "Click town lots or use the Town Map panel to tend rows, promote the Haven Bar, build favor, lower heat, and keep supplies moving."
   };
 }
 
@@ -3008,7 +3262,7 @@ function showTutorialIntro() {
   showDialogue({
     speaker: "Mascot",
     title: "How The Haven Starts",
-    text: "Start simple: choose a seed in the Seed Vault, Plant Seeds, wait for the timers, Harvest Ready, Stock Counter, then customers buy from the counter automatically. After that, use upgrades to unlock the lounge, Snack Rush, stage events, staff, security, and more seeds. Every fifth upgrade brings in a new character quest.",
+    text: "Start simple: choose a seed in the Seed Vault, Plant Seeds, wait for the timers, Harvest Ready, Stock Counter, then customers buy from the bar automatically. After that, use the Town Map, upgrades, Snack Rush, stage events, staff, security, and more seeds. Every fifth upgrade brings in a new character quest.",
     primary: "Got It",
     action: () => {
       state.tutorialSeen = true;
@@ -3039,6 +3293,16 @@ function bindEvents() {
   el.avatarAccessorySelect.addEventListener("change", updateAvatarFromControls);
   el.avatarPersonalitySelect.addEventListener("change", updateAvatarFromControls);
   el.avatarRandomButton.addEventListener("click", randomizeAvatar);
+  el.townPrimaryButton.addEventListener("click", runTownAction);
+  el.townSceneButton.addEventListener("click", showTownDistrictScene);
+  document.querySelectorAll("[data-district]").forEach((lot) => {
+    lot.addEventListener("click", () => selectTownDistrict(lot.dataset.district));
+    lot.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      selectTownDistrict(lot.dataset.district);
+    });
+  });
   el.castSceneButton.addEventListener("click", showCastIntroScene);
   el.modalPrimary.addEventListener("click", () => closeDialogue(true));
   el.modalSecondary.addEventListener("click", () => closeDialogue(false));
