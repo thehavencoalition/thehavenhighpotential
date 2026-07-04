@@ -52,15 +52,44 @@
           <span id="sceneMood">Opening night energy</span>
         </div>
 
+        <nav class="room-nav" aria-label="Move between rooms">
+          <button type="button" data-district="grow">Grow Room</button>
+          <button type="button" data-district="haven">Haven Bar</button>
+          <button type="button" data-district="square">Town Square</button>
+          <button type="button" data-district="cityHall">City Hall</button>
+          <button type="button" data-district="park">Park</button>
+          <button type="button" data-district="delivery">Delivery</button>
+          <button type="button" data-district="mural">Mural</button>
+        </nav>
+
         <div class="scene" id="scene">
+          <div class="map-spacer" aria-hidden="true"></div>
           <div class="town-road main-street"></div>
           <div class="town-road cross-street"></div>
+          <div class="town-detail sidewalk grow-sidewalk" aria-hidden="true"></div>
+          <div class="town-detail sidewalk haven-sidewalk" aria-hidden="true"></div>
+          <div class="town-detail crosswalk" aria-hidden="true"></div>
+          <div class="town-detail streetlight light-a" aria-hidden="true"></div>
+          <div class="town-detail streetlight light-b" aria-hidden="true"></div>
+          <div class="town-detail planter planter-a" aria-hidden="true"></div>
+          <div class="town-detail planter planter-b" aria-hidden="true"></div>
+          <div class="town-detail parked-car car-a" aria-hidden="true"></div>
+          <div class="town-detail parked-car car-b" aria-hidden="true"></div>
+          <div class="town-detail delivery-van" aria-hidden="true"></div>
           <button class="town-plaza town-lot" data-district="square" type="button">Town Square</button>
           <button class="town-prop city-hall town-lot" data-district="cityHall" type="button">City Hall</button>
           <button class="town-prop community-park town-lot" data-district="park" type="button">Park</button>
           <button class="town-prop delivery-yard town-lot" data-district="delivery" type="button">Delivery</button>
           <button class="town-prop mural-wall town-lot" data-district="mural" type="button">Mural</button>
           <div class="room grow-room town-lot" data-district="grow" role="button" tabindex="0">
+            <div class="room-wall back-wall" aria-hidden="true"></div>
+            <div class="room-wall left-wall" aria-hidden="true"></div>
+            <div class="room-wall right-wall" aria-hidden="true"></div>
+            <div class="grow-prop rollup-door" aria-hidden="true">Bay</div>
+            <div class="grow-prop ceiling-duct" aria-hidden="true"></div>
+            <div class="grow-prop water-barrels" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="grow-prop soil-bags" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="grow-prop sensor-panel" aria-hidden="true"></div>
             <div class="room-header">
               <span>Grow Warehouse</span>
               <strong id="growRoomLevel">Room Lv. 1</strong>
@@ -79,6 +108,15 @@
           </div>
 
           <div class="room haven-room town-lot" data-district="haven" role="button" tabindex="0">
+            <div class="room-wall back-wall" aria-hidden="true"></div>
+            <div class="room-wall left-wall" aria-hidden="true"></div>
+            <div class="room-wall right-wall" aria-hidden="true"></div>
+            <div class="haven-prop storefront-door" aria-hidden="true">Open</div>
+            <div class="haven-prop window-strip" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="haven-prop string-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="haven-prop lounge-rug" aria-hidden="true"></div>
+            <div class="haven-prop wall-art" aria-hidden="true"></div>
+            <div class="haven-prop entry-mat" aria-hidden="true">Welcome</div>
             <div class="room-header">
               <span>Haven Block</span>
               <strong id="storeRoomLevel">Store Lv. 1</strong>

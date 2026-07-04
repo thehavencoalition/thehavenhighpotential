@@ -1102,6 +1102,14 @@ function currentTownDistrict() {
   return townDistrictByKey(state.townFocus);
 }
 
+function focusSceneDistrict(key, behavior = "smooth") {
+  const target = [...el.scene.querySelectorAll("[data-district]")].find((lot) => lot.dataset.district === key);
+  if (!target) return;
+  const top = Math.max(0, target.offsetTop - (el.scene.clientHeight - target.offsetHeight) / 2);
+  const left = Math.max(0, target.offsetLeft - (el.scene.clientWidth - target.offsetWidth) / 2);
+  el.scene.scrollTo({ top, left, behavior });
+}
+
 function plantedPlantCount() {
   return state.plants.filter((plant) => plant.planted && !plant.ready).length;
 }
@@ -1125,6 +1133,7 @@ function selectTownDistrict(key) {
   state.townFocus = townDistrictByKey(key).key;
   saveState();
   renderTownMap();
+  requestAnimationFrame(() => focusSceneDistrict(state.townFocus));
 }
 
 function updateTownActionButton() {
@@ -3390,6 +3399,7 @@ function init() {
   populateAvatarControls();
   bindEvents();
   renderAll();
+  requestAnimationFrame(() => focusSceneDistrict(state.townFocus, "auto"));
   currentStoryQuest();
   if (!state.tutorialSeen) {
     setTimeout(showTutorialIntro, 320);
