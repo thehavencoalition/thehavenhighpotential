@@ -1064,7 +1064,7 @@ function upcomingRoomDetail(key) {
 }
 
 function renderRoomExpansion() {
-  const classes = ["scene"];
+  const classes = ["scene", "environment-3d"];
   Object.keys(upgradeDefs).forEach((key) => {
     classes.push(`${key}-${clamp(state.upgrades[key], 0, 5)}`);
   });

@@ -320,8 +320,55 @@ h1 {
   box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.scene::before {
-  display: none;
+.scene.environment-3d {
+  isolation: isolate;
+  perspective: 1200px;
+  background:
+    linear-gradient(35deg, rgba(23, 32, 51, 0.035) 0 2px, transparent 2px 28px),
+    linear-gradient(125deg, rgba(35, 139, 87, 0.05) 0 2px, transparent 2px 32px),
+    radial-gradient(circle at 18% 82%, rgba(79, 213, 155, 0.24), transparent 21%),
+    radial-gradient(circle at 88% 16%, rgba(245, 184, 75, 0.22), transparent 18%),
+    linear-gradient(180deg, #fbfff6 0%, #e3f2e9 55%, #eef5f9 100%);
+  background-size: 54px 54px, 64px 64px, auto, auto, auto;
+  box-shadow:
+    inset 0 0 0 5px rgba(255, 255, 255, 0.58),
+    inset 0 -34px 60px rgba(23, 32, 51, 0.06),
+    0 18px 40px rgba(23, 32, 51, 0.13);
+}
+
+.scene.environment-3d::before,
+.scene.environment-3d::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.scene.environment-3d::before {
+  z-index: 0;
+  inset: 0;
+  display: block;
+  background:
+    radial-gradient(circle at 25% 18%, rgba(255, 255, 255, 0.72), transparent 18%),
+    radial-gradient(circle at 70% 62%, rgba(61, 201, 212, 0.12), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 44%);
+  animation: ambientLightDrift 8s ease-in-out infinite alternate;
+}
+
+.scene.environment-3d::after {
+  z-index: 0;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  height: 168px;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 50% 70%, rgba(23, 32, 51, 0.1), transparent 62%),
+    linear-gradient(90deg, rgba(79, 213, 155, 0.16), rgba(61, 201, 212, 0.1));
+  filter: blur(1px);
+}
+
+.scene.environment-3d > * {
+  transform-style: preserve-3d;
 }
 
 .town-road {
@@ -332,6 +379,28 @@ h1 {
     linear-gradient(90deg, transparent 0 46%, rgba(255, 255, 255, 0.58) 46% 54%, transparent 54%),
     linear-gradient(180deg, #cfd8df, #b7c3cc);
   box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.scene.environment-3d .town-road {
+  overflow: hidden;
+  border-color: rgba(23, 32, 51, 0.16);
+  background:
+    linear-gradient(90deg, transparent 0 44%, rgba(255, 255, 255, 0.72) 44% 56%, transparent 56%),
+    repeating-linear-gradient(180deg, transparent 0 28px, rgba(255, 255, 255, 0.3) 28px 38px),
+    linear-gradient(180deg, #dbe3ea, #aebcc8);
+  box-shadow:
+    inset 0 5px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -7px 0 rgba(23, 32, 51, 0.09),
+    7px 9px 0 rgba(83, 100, 117, 0.16);
+}
+
+.scene.environment-3d .town-road::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, transparent 0 42%, rgba(255, 255, 255, 0.36) 42% 58%, transparent 58%);
+  opacity: 0.52;
+  animation: roadShimmer 6s linear infinite;
 }
 
 .main-street {
@@ -368,6 +437,17 @@ h1 {
   box-shadow: 0 8px 14px rgba(23, 32, 51, 0.1);
 }
 
+.scene.environment-3d .town-prop,
+.scene.environment-3d .town-plaza {
+  border-color: rgba(23, 32, 51, 0.2);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    8px 10px 0 rgba(83, 100, 117, 0.2),
+    0 15px 24px rgba(23, 32, 51, 0.14),
+    inset 0 7px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -9px 0 rgba(23, 32, 51, 0.08);
+}
+
 .town-lot {
   min-height: 0;
   padding: 0;
@@ -377,8 +457,17 @@ h1 {
   transition: transform 160ms ease, box-shadow 160ms ease, outline-color 160ms ease;
 }
 
-.town-lot:hover {
+.town-lot:hover,
+.scene.environment-3d .town-lot:hover {
   transform: translateY(-1px);
+}
+
+.scene.environment-3d .town-lot:hover {
+  box-shadow:
+    10px 13px 0 rgba(83, 100, 117, 0.2),
+    0 18px 30px rgba(23, 32, 51, 0.17),
+    inset 0 7px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -9px 0 rgba(23, 32, 51, 0.08);
 }
 
 .town-lot.selected {
@@ -402,6 +491,26 @@ h1 {
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.45), 0 12px 20px rgba(23, 32, 51, 0.14);
 }
 
+.scene.environment-3d .town-plaza {
+  background:
+    radial-gradient(circle at 50% 50%, #ffffff 0 10%, transparent 11%),
+    radial-gradient(circle, #4fd59b 0 35%, #3dc9d4 36% 43%, #26324d 44% 100%);
+  animation: plazaGlow 3.6s ease-in-out infinite alternate;
+}
+
+.town-plaza::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  content: "";
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(61, 201, 212, 0.45));
+  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.23);
+  transform: translate(-50%, -50%);
+}
+
 .city-hall {
   left: 56px;
   bottom: 64px;
@@ -420,6 +529,25 @@ h1 {
   background: #8d52ff;
 }
 
+.city-hall::after {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 12px;
+  height: 42px;
+  content: "";
+  border-radius: 5px;
+  background:
+    repeating-linear-gradient(90deg, rgba(23, 32, 51, 0.18) 0 7px, transparent 7px 19px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.scene.environment-3d .city-hall {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), transparent 46%),
+    linear-gradient(135deg, #ffffff, #cfd9e7);
+}
+
 .community-park {
   left: 220px;
   bottom: 70px;
@@ -432,6 +560,31 @@ h1 {
     linear-gradient(135deg, #e8fff3, #baf7dc);
 }
 
+.community-park::before,
+.community-park::after {
+  position: absolute;
+  content: "";
+  border-radius: 50%;
+}
+
+.community-park::before {
+  left: 18px;
+  top: 18px;
+  width: 26px;
+  height: 26px;
+  background: #238b57;
+  box-shadow: 42px 38px 0 #4fd59b, 92px 18px 0 #3dc9d4;
+}
+
+.community-park::after {
+  right: 24px;
+  bottom: 18px;
+  width: 42px;
+  height: 20px;
+  background: rgba(61, 201, 212, 0.42);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.46);
+}
+
 .delivery-yard {
   right: 272px;
   bottom: 72px;
@@ -439,6 +592,18 @@ h1 {
   height: 88px;
   color: #ffffff;
   background: linear-gradient(135deg, #356f68, #26324d);
+}
+
+.delivery-yard::before {
+  position: absolute;
+  right: 12px;
+  top: 13px;
+  width: 38px;
+  height: 28px;
+  content: "";
+  border-radius: 6px;
+  background: #f5b84b;
+  box-shadow: -44px 8px 0 #4fd59b;
 }
 
 .delivery-yard::after {
@@ -464,6 +629,17 @@ h1 {
     #26324d;
 }
 
+.mural-wall::before {
+  position: absolute;
+  inset: 10px 12px;
+  content: "";
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 20% 45%, rgba(61, 201, 212, 0.75) 0 9px, transparent 10px),
+    radial-gradient(circle at 78% 40%, rgba(245, 184, 75, 0.8) 0 8px, transparent 9px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+}
+
 .mural-wall::after {
   content: "High Society";
   color: #ffffff;
@@ -480,6 +656,62 @@ h1 {
   box-shadow: 0 12px 18px rgba(23, 32, 51, 0.12), inset 0 0 0 4px rgba(255, 255, 255, 0.36);
 }
 
+.scene.environment-3d .room {
+  border-color: rgba(23, 32, 51, 0.24);
+  box-shadow:
+    17px 18px 0 rgba(83, 100, 117, 0.22),
+    22px 24px 0 rgba(23, 32, 51, 0.08),
+    0 26px 34px rgba(23, 32, 51, 0.16),
+    inset 0 12px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -18px 0 rgba(23, 32, 51, 0.1),
+    inset 12px 0 0 rgba(255, 255, 255, 0.16),
+    inset -12px 0 0 rgba(23, 32, 51, 0.055);
+}
+
+.scene.environment-3d .room::before,
+.scene.environment-3d .room::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.scene.environment-3d .room::before {
+  z-index: 1;
+  inset: -12px 14px auto;
+  height: 68px;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-bottom-color: rgba(23, 32, 51, 0.14);
+  border-radius: 8px 8px 18px 18px;
+  background:
+    linear-gradient(100deg, transparent 0 18%, rgba(255, 255, 255, 0.62) 23%, transparent 31% 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.44), transparent 42%, rgba(255, 255, 255, 0.24)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.08));
+  background-size: 170% 100%, auto, auto;
+  box-shadow:
+    0 12px 0 rgba(23, 32, 51, 0.1),
+    inset 0 -14px 0 rgba(23, 32, 51, 0.09);
+  animation: buildingLightSweep 5.8s ease-in-out infinite alternate;
+}
+
+.scene.environment-3d .room::after {
+  z-index: -1;
+  left: 20px;
+  right: -28px;
+  bottom: -34px;
+  height: 38px;
+  border-radius: 8px 8px 16px 16px;
+  background:
+    linear-gradient(90deg, rgba(23, 32, 51, 0.2), rgba(23, 32, 51, 0.04)),
+    rgba(55, 69, 86, 0.22);
+  filter: blur(0.15px);
+  transform: skewX(28deg);
+}
+
+.scene.environment-3d .room > * {
+  position: absolute;
+  z-index: 2;
+}
+
 .grow-room {
   left: 28px;
   top: 48px;
@@ -491,6 +723,37 @@ h1 {
     linear-gradient(180deg, rgba(68, 189, 112, 0.18), rgba(61, 201, 212, 0.1)),
     var(--floor);
   background-size: 32px 32px, 32px 32px, auto, auto;
+}
+
+.scene.environment-3d .grow-room {
+  background:
+    linear-gradient(180deg, rgba(26, 108, 81, 0.26) 0 18px, transparent 18px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.26) 0 12%, transparent 12% 21%, rgba(255, 255, 255, 0.18) 21% 33%, transparent 33%),
+    linear-gradient(rgba(35, 139, 87, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(35, 139, 87, 0.09) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(68, 189, 112, 0.24), rgba(61, 201, 212, 0.12)),
+    #edf1f5;
+  background-size: auto, auto, 32px 32px, 32px 32px, auto, auto;
+}
+
+.scene.environment-3d .grow-room::before {
+  background:
+    radial-gradient(circle at 84% 45%, rgba(106, 255, 183, 0.56) 0 11px, transparent 12px),
+    linear-gradient(100deg, transparent 0 18%, rgba(255, 255, 255, 0.62) 23%, transparent 31% 100%),
+    linear-gradient(180deg, rgba(76, 218, 142, 0.64), rgba(39, 154, 117, 0.28));
+  background-size: auto, 170% 100%, auto;
+}
+
+.scene.environment-3d .grow-room .room-header::after {
+  content: "OPEN ROOF";
+  display: inline-flex;
+  margin-left: 4px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  color: #1f765f;
+  background: #abffd4;
+  font-size: 0.58rem;
+  letter-spacing: 0;
 }
 
 .haven-room {
@@ -506,6 +769,37 @@ h1 {
   background-size: 32px 32px, 32px 32px, auto, auto;
 }
 
+.scene.environment-3d .haven-room {
+  background:
+    linear-gradient(180deg, rgba(141, 82, 255, 0.26) 0 18px, transparent 18px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 16%, transparent 16% 26%, rgba(255, 255, 255, 0.13) 26% 44%, transparent 44%),
+    linear-gradient(rgba(141, 82, 255, 0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(141, 82, 255, 0.065) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 120, 94, 0.16), rgba(141, 82, 255, 0.13), rgba(61, 201, 212, 0.1)),
+    #edf1f5;
+  background-size: auto, auto, 32px 32px, 32px 32px, auto, auto;
+}
+
+.scene.environment-3d .haven-room::before {
+  background:
+    radial-gradient(circle at 83% 44%, rgba(255, 105, 184, 0.58) 0 10px, transparent 11px),
+    linear-gradient(100deg, transparent 0 18%, rgba(255, 255, 255, 0.62) 23%, transparent 31% 100%),
+    linear-gradient(180deg, rgba(255, 120, 94, 0.54), rgba(141, 82, 255, 0.34), rgba(61, 201, 212, 0.22));
+  background-size: auto, 170% 100%, auto;
+}
+
+.scene.environment-3d .haven-room .room-header::after {
+  content: "BAR";
+  display: inline-flex;
+  margin-left: 4px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  color: #24304c;
+  background: #72f5ff;
+  font-size: 0.58rem;
+  letter-spacing: 0;
+}
+
 .room-header {
   position: absolute;
   z-index: 5;
@@ -519,6 +813,15 @@ h1 {
   color: #ffffff;
   background: rgba(23, 32, 51, 0.84);
   box-shadow: 0 8px 18px rgba(23, 32, 51, 0.14);
+}
+
+.scene.environment-3d .room-header {
+  z-index: 12;
+  transform: translateY(-2px);
+  box-shadow:
+    0 9px 0 rgba(23, 32, 51, 0.12),
+    0 14px 20px rgba(23, 32, 51, 0.14);
+  animation: signFloat 3.8s ease-in-out infinite alternate;
 }
 
 .room-header span,
@@ -545,6 +848,15 @@ h1 {
   background: #8c6744;
   box-shadow: inset 0 0 0 7px rgba(255, 255, 255, 0.1), inset 0 -8px 0 rgba(23, 32, 51, 0.08), 0 7px 12px rgba(23, 32, 51, 0.12);
   cursor: pointer;
+}
+
+.scene.environment-3d .plant-slot {
+  transform: translateZ(0);
+  box-shadow:
+    6px 7px 0 rgba(94, 69, 48, 0.22),
+    inset 0 0 0 7px rgba(255, 255, 255, 0.12),
+    inset 0 -8px 0 rgba(23, 32, 51, 0.09),
+    0 10px 14px rgba(23, 32, 51, 0.15);
 }
 
 .plant-slot::after {
@@ -3155,6 +3467,53 @@ h1 {
   }
   to {
     filter: brightness(1.18);
+  }
+}
+
+@keyframes ambientLightDrift {
+  from {
+    opacity: 0.7;
+    transform: translate3d(-6px, -4px, 0);
+  }
+  to {
+    opacity: 0.95;
+    transform: translate3d(8px, 5px, 0);
+  }
+}
+
+@keyframes roadShimmer {
+  from {
+    transform: translateY(-36px);
+  }
+  to {
+    transform: translateY(36px);
+  }
+}
+
+@keyframes plazaGlow {
+  from {
+    filter: saturate(1) brightness(1);
+  }
+  to {
+    filter: saturate(1.18) brightness(1.08);
+  }
+}
+
+@keyframes buildingLightSweep {
+  from {
+    background-position: 120% 0, 0 0, 0 0;
+  }
+  to {
+    background-position: -20% 0, 0 0, 0 0;
+  }
+}
+
+@keyframes signFloat {
+  from {
+    transform: translateY(-2px);
+  }
+  to {
+    transform: translateY(-5px);
   }
 }
 
