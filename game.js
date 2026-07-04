@@ -11,6 +11,7 @@ const el = {
   favorText: document.getElementById("favorText"),
   favorBar: document.getElementById("favorBar"),
   plantGrid: document.getElementById("plantGrid"),
+  scene: document.getElementById("scene"),
   upgradeList: document.getElementById("upgradeList"),
   animatedLayer: document.getElementById("animatedLayer"),
   floatingLayer: document.getElementById("floatingLayer"),
@@ -60,11 +61,26 @@ const el = {
   seedInfoButton: document.getElementById("seedInfoButton"),
   seedSummary: document.getElementById("seedSummary"),
   seedCollection: document.getElementById("seedCollection"),
-  seedUnlockCount: document.getElementById("seedUnlockCount")
+  seedUnlockCount: document.getElementById("seedUnlockCount"),
+  castGrid: document.getElementById("castGrid"),
+  castSceneButton: document.getElementById("castSceneButton"),
+  roomDetailList: document.getElementById("roomDetailList"),
+  roomDetailCount: document.getElementById("roomDetailCount"),
+  cutsceneBackdrop: document.getElementById("cutsceneBackdrop"),
+  cutsceneTitle: document.getElementById("cutsceneTitle"),
+  cutsceneSceneLabel: document.getElementById("cutsceneSceneLabel"),
+  cutsceneStage: document.getElementById("cutsceneStage"),
+  cutsceneLeft: document.getElementById("cutsceneLeft"),
+  cutsceneRight: document.getElementById("cutsceneRight"),
+  cutsceneSpeaker: document.getElementById("cutsceneSpeaker"),
+  cutsceneBeatTitle: document.getElementById("cutsceneBeatTitle"),
+  cutsceneLine: document.getElementById("cutsceneLine"),
+  cutsceneNext: document.getElementById("cutsceneNext"),
+  cutsceneSkip: document.getElementById("cutsceneSkip")
 };
 
 const SAVE_KEY = "havenHighSocietyPrototype";
-const SAVE_VERSION = 5;
+const SAVE_VERSION = 6;
 
 const upgradeDefs = {
   growLights: {
@@ -124,6 +140,178 @@ const upgradeDefs = {
     npc: "Jules Park"
   }
 };
+
+const characterDefs = [
+  {
+    key: "mascot",
+    name: "Haven Mascot",
+    title: "Brand Guide",
+    role: "Tutorial voice, quest helper, and panic translator.",
+    unlock: "starter",
+    skin: "#ffffff",
+    hair: "#41c879",
+    shirt: "#3dc9d4",
+    accent: "#8d52ff",
+    hairClass: "leaf",
+    expression: "grin",
+    catchphrase: "Keep the plants happy, the customers happier, and the heat off the front door."
+  },
+  {
+    key: "mira",
+    name: "Mira Watts",
+    title: "Grow Tech",
+    role: "Upgrades lights, fans, power flow, and grow-room machinery.",
+    unlock: "Grow Lights Level 5",
+    skin: "#b87355",
+    hair: "#26324d",
+    shirt: "#4fd59b",
+    accent: "#f5b84b",
+    hairClass: "bob",
+    expression: "focused",
+    catchphrase: "If the wall buzzes, the budget buzzes louder."
+  },
+  {
+    key: "darnell",
+    name: "Uncle Darnell",
+    title: "Neighborhood Grow Mentor",
+    role: "Expands plant rows and keeps the grow side respectful.",
+    unlock: "Plant Rows Level 5",
+    skin: "#8f5a48",
+    hair: "#f5f0e8",
+    shirt: "#238b57",
+    accent: "#b98462",
+    hairClass: "cap",
+    expression: "steady",
+    catchphrase: "Plants do better when the room has respect."
+  },
+  {
+    key: "sav",
+    name: "Sav Cruz",
+    title: "Counter Designer",
+    role: "Reworks checkout flow, menus, shelves, and customer patience.",
+    unlock: "Counter Level 5",
+    skin: "#d99d74",
+    hair: "#172033",
+    shirt: "#3dc9d4",
+    accent: "#ff5e93",
+    hairClass: "fade",
+    expression: "sharp",
+    catchphrase: "Cute counter. Also slow. We can fix one of those today."
+  },
+  {
+    key: "velma",
+    name: "Velma Vibe",
+    title: "Lounge Curator",
+    role: "Turns seating, lighting, and decor into customer loyalty.",
+    unlock: "Lounge Level 5",
+    skin: "#c9876a",
+    hair: "#8d52ff",
+    shirt: "#ff5e93",
+    accent: "#f5b84b",
+    hairClass: "curls",
+    expression: "warm",
+    catchphrase: "A chair is furniture. A couch is a promise."
+  },
+  {
+    key: "nova",
+    name: "Nova Sweets",
+    title: "Snack Bar Strategist",
+    role: "Builds munchies revenue with coolers, shelves, and rushes.",
+    unlock: "Snack Bar Level 5",
+    skin: "#f0bf8f",
+    hair: "#ff785e",
+    shirt: "#f5b84b",
+    accent: "#3dc9d4",
+    hairClass: "puffs",
+    expression: "excited",
+    catchphrase: "Crunch, fizz, and questionable confidence."
+  },
+  {
+    key: "rico",
+    name: "Rico Reyes",
+    title: "Stage Booker",
+    role: "Books events and upgrades the stage from corner mic to crowd magnet.",
+    unlock: "Stage Level 5",
+    skin: "#bf7b55",
+    hair: "#1d2033",
+    shirt: "#8d52ff",
+    accent: "#3dc9d4",
+    hairClass: "pompadour",
+    expression: "showtime",
+    catchphrase: "Every legendary night begins with someone saying the mic is probably fine."
+  },
+  {
+    key: "jules",
+    name: "Jules Park",
+    title: "Security Lead",
+    role: "Keeps the room calm, the door checked, and the paperwork boring.",
+    unlock: "Security Level 5",
+    skin: "#d6a07c",
+    hair: "#243042",
+    shirt: "#26324d",
+    accent: "#4fd59b",
+    hairClass: "buzz",
+    expression: "calm",
+    catchphrase: "The law is less scary when your paperwork is boring."
+  },
+  {
+    key: "vale",
+    name: "Officer Vale",
+    title: "Local Officer",
+    role: "Represents warning-light pressure, visits, and inspection tension.",
+    unlock: "Heat on the Block",
+    skin: "#c9876a",
+    hair: "#343b4d",
+    shirt: "#48587c",
+    accent: "#f5b84b",
+    hairClass: "cap",
+    expression: "skeptical",
+    catchphrase: "I like quiet nights. Make this one easy."
+  },
+  {
+    key: "imani",
+    name: "Council Member Imani",
+    title: "City Hall Ally",
+    role: "Connects community reputation, political favor, and expansion approval.",
+    unlock: "Future City Hall chapter",
+    skin: "#8f5a48",
+    hair: "#2f241f",
+    shirt: "#ffffff",
+    accent: "#8d52ff",
+    hairClass: "locs",
+    expression: "composed",
+    catchphrase: "Neighborhood trust is the strongest permit you can earn."
+  },
+  {
+    key: "rival",
+    name: "Blaze Baxter",
+    title: "Rival Shop Owner",
+    role: "Stirs up rumors, price wars, and event challenges.",
+    unlock: "Future Rival chapter",
+    skin: "#e0aa7b",
+    hair: "#ff5e93",
+    shirt: "#172033",
+    accent: "#f5b84b",
+    hairClass: "spikes",
+    expression: "smirk",
+    catchphrase: "Nice little shop. Be a shame if everyone heard about mine."
+  }
+];
+
+const roomDetailDefs = [
+  { key: "starterPots", room: "Grow Side", upgrade: "plantRows", level: 1, label: "Starter Pots", detail: "Basic rows make the grow side readable and easy to expand." },
+  { key: "brightLights", room: "Grow Side", upgrade: "growLights", level: 2, label: "Brighter Light Rig", detail: "Plants glow stronger and grow timers feel more active." },
+  { key: "irrigation", room: "Grow Side", upgrade: "plantRows", level: 3, label: "Irrigation Line", detail: "A visible water line hints that growers can automate care later." },
+  { key: "genetics", room: "Grow Side", upgrade: "growLights", level: 5, label: "Genetics Bench", detail: "Story-gated equipment supports rare seeds and signature strains." },
+  { key: "harvestCrates", room: "Grow Side", upgrade: "plantRows", level: 5, label: "Harvest Crates", detail: "Crates show the room becoming a production engine." },
+  { key: "menuBoard", room: "Haven Side", upgrade: "counter", level: 2, label: "Digital Menu", detail: "Customers can see the strain mix before checkout." },
+  { key: "neonLounge", room: "Haven Side", upgrade: "lounge", level: 1, label: "Neon Lounge Sign", detail: "The lounge starts feeling like a place to stay, not just pass through." },
+  { key: "arcadeCorner", room: "Haven Side", upgrade: "lounge", level: 3, label: "Arcade Corner", detail: "Customers linger longer, building Vibe and Munchies." },
+  { key: "snackCooler", room: "Haven Side", upgrade: "snackBar", level: 2, label: "Drink Cooler", detail: "Snack Rushes look and pay better once the cooler appears." },
+  { key: "stageLights", room: "Haven Side", upgrade: "stage", level: 2, label: "Stage Lights", detail: "Events become visually obvious and pull more traffic." },
+  { key: "cameraNode", room: "Haven Side", upgrade: "security", level: 1, label: "Security Camera", detail: "The legal warning light feels tied to visible compliance tools." },
+  { key: "vipCorner", room: "Haven Side", upgrade: "stage", level: 5, label: "VIP Corner", detail: "A late-stage expansion area for High Society nights." }
+];
 
 const strainDefs = [
   { key: "blueDream", name: "Blue Dream", type: "Hybrid", rarity: "common", unlock: { type: "starter" }, grow: 1, yield: 1, price: 1, vibe: 2, munchies: 1, color: "#4aa7ff", flavor: "berry haze" },
@@ -531,6 +719,8 @@ let staffTimer = 0;
 let saveTimer = 0;
 let customerId = 1;
 let currentModalAction = null;
+let activeCutscene = null;
+let cutsceneIndex = 0;
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -734,6 +924,479 @@ function plantedStrainLabel(plant) {
   return name.length > 12 ? `${name.slice(0, 10)}.` : name;
 }
 
+function ownerCharacterDef() {
+  const visual = avatarVisualData();
+  const personality = optionFor("personalities", state.avatar.personality);
+  return {
+    key: "owner",
+    name: state.avatar.name || "Boss",
+    title: personality.label,
+    role: "Player owner of The Haven Co.",
+    skin: visual.skin,
+    hair: visual.hairColor,
+    shirt: visual.shirt,
+    accent: visual.accent,
+    hairClass: visual.hairClass,
+    expression: "ready",
+    catchphrase: "Let's build High Society."
+  };
+}
+
+function characterByKey(key) {
+  if (key === "owner") return ownerCharacterDef();
+  return characterDefs.find((character) => character.key === key) || characterDefs[0];
+}
+
+function characterByName(name) {
+  if (!name) return characterByKey("mascot");
+  if (name === "Mascot" || name === "Haven Mascot") return characterByKey("mascot");
+  return characterDefs.find((character) => character.name === name) || characterByKey("mascot");
+}
+
+function characterKeyForNpc(name) {
+  return characterByName(name).key;
+}
+
+function createCharacterBust(character, compact = false) {
+  const bust = document.createElement("div");
+  bust.className = `character-bust ${compact ? "compact" : ""} hair-${character.hairClass || "fade"} expression-${character.expression || "ready"} ${character.key === "mascot" ? "mascot-bust" : ""}`;
+  bust.style.setProperty("--char-skin", character.skin);
+  bust.style.setProperty("--char-hair", character.hair);
+  bust.style.setProperty("--char-shirt", character.shirt);
+  bust.style.setProperty("--char-accent", character.accent);
+  bust.innerHTML = `
+    <span class="char-hair"></span>
+    <span class="char-face"></span>
+    <span class="char-eyes"></span>
+    <span class="char-mouth"></span>
+    <span class="char-body"></span>
+    <span class="char-detail"></span>
+  `;
+  return bust;
+}
+
+function activeRoomDetails() {
+  return roomDetailDefs.filter((detail) => state.upgrades[detail.upgrade] >= detail.level);
+}
+
+function upcomingRoomDetail(key) {
+  return roomDetailDefs.find((detail) => detail.upgrade === key && state.upgrades[key] < detail.level);
+}
+
+function renderRoomExpansion() {
+  const classes = ["scene"];
+  Object.keys(upgradeDefs).forEach((key) => {
+    classes.push(`${key}-${clamp(state.upgrades[key], 0, 5)}`);
+  });
+  const growTier = clamp(Math.floor((state.upgrades.growLights + state.upgrades.plantRows) / 4), 0, 3);
+  const storeTier = clamp(Math.floor((state.upgrades.counter + state.upgrades.lounge + state.upgrades.snackBar + state.upgrades.stage + state.upgrades.security) / 5), 0, 4);
+  classes.push(`grow-tier-${growTier}`, `store-tier-${storeTier}`);
+  el.scene.className = classes.join(" ");
+}
+
+function renderRoomDetails() {
+  const active = activeRoomDetails();
+  el.roomDetailCount.textContent = `${active.length}/${roomDetailDefs.length} active`;
+  el.roomDetailList.innerHTML = "";
+  roomDetailDefs.forEach((detail) => {
+    const unlocked = state.upgrades[detail.upgrade] >= detail.level;
+    const item = document.createElement("div");
+    item.className = `room-detail-item ${unlocked ? "active" : ""}`;
+    item.innerHTML = `
+      <strong>${detail.label}</strong>
+      <span>${detail.room} - ${upgradeDefs[detail.upgrade].label} Lv. ${detail.level}</span>
+      <small>${unlocked ? detail.detail : "Locked until this upgrade level."}</small>
+    `;
+    el.roomDetailList.appendChild(item);
+  });
+}
+
+function resolveCharacter(value) {
+  if (!value) return characterByKey("mascot");
+  if (typeof value === "object") return value;
+  if (value === "owner") return ownerCharacterDef();
+  return characterDefs.find((character) => character.key === value || character.name === value)
+    || characterByName(value);
+}
+
+function isCharacterUnlocked(character) {
+  if (character.key === "owner" || character.key === "mascot") return true;
+  const gateUnlocks = {
+    mira: "growLights:5",
+    darnell: "plantRows:5",
+    sav: "counter:5",
+    velma: "lounge:5",
+    nova: "snackBar:5",
+    rico: "stage:5",
+    jules: "security:5"
+  };
+  const gate = gateUnlocks[character.key];
+  if (gate && (state.completedGates[gate] || state.activeGateQuest?.npc === character.name)) return true;
+  if (character.key === "vale") return state.completedStory.heat_on_the_block || state.storyQuestIndex >= 4 || state.heat >= 30;
+  if (character.key === "imani") return state.favor >= 10 || state.completedStory.heat_on_the_block;
+  if (character.key === "rival") return state.reputation >= 42 || state.metrics.events >= 3;
+  return false;
+}
+
+function characterUnlockText(character) {
+  if (isCharacterUnlocked(character)) return "Available";
+  return `Meet: ${character.unlock}`;
+}
+
+function renderCastBoard() {
+  const cast = [ownerCharacterDef(), ...characterDefs];
+  el.castGrid.innerHTML = "";
+  cast.forEach((character) => {
+    const unlocked = isCharacterUnlocked(character);
+    const card = document.createElement("button");
+    card.className = `cast-member ${unlocked ? "unlocked" : "locked"}`;
+    card.type = "button";
+    card.appendChild(createCharacterBust(character, true));
+    const copy = document.createElement("span");
+    copy.className = "cast-copy";
+    copy.innerHTML = `
+      <strong>${character.name}</strong>
+      <em>${character.title}</em>
+      <small>${unlocked ? character.catchphrase : characterUnlockText(character)}</small>
+    `;
+    card.appendChild(copy);
+    card.addEventListener("click", () => showCharacterScene(character));
+    el.castGrid.appendChild(card);
+  });
+}
+
+function showCharacterScene(character) {
+  const unlocked = isCharacterUnlocked(character);
+  showCutscene({
+    title: unlocked ? character.name : "Future Introduction",
+    location: unlocked ? character.title : character.unlock,
+    sceneClass: unlocked ? "cast" : "locked",
+    left: "mascot",
+    right: character.key,
+    beats: [
+      {
+        speaker: unlocked ? character.name : "Haven Mascot",
+        title: unlocked ? character.title : "Not In The Room Yet",
+        line: unlocked
+          ? `${character.catchphrase} ${character.role}`
+          : `${character.name} joins through ${character.unlock}. Keep upgrading and their scene will move from rumor to real conversation.`
+      }
+    ]
+  });
+}
+
+function showCastIntroScene() {
+  showCutscene({
+    title: "Cast Board",
+    location: "Original Haven",
+    sceneClass: "cast",
+    left: "mascot",
+    right: "owner",
+    beats: [
+      {
+        speaker: "Haven Mascot",
+        title: "The People Make The Place",
+        line: "High Society is not just rooms and registers. Every fifth upgrade brings in someone with a problem, a part, and a very specific opinion."
+      },
+      {
+        speaker: state.avatar.name || "Boss",
+        title: "Meet The Crew",
+        line: "So we grow the shop, meet the neighborhood, and turn upgrades into story moments. I can work with that."
+      },
+      {
+        speaker: "Haven Mascot",
+        title: "Tiny Warning",
+        line: "Some visitors are friends. Some are rivals. Some are definitely taking notes. The warning light loves drama."
+      }
+    ]
+  });
+}
+
+function cutsceneForStory(quest, mode = "start") {
+  const ownerName = state.avatar.name || "Boss";
+  const scripts = {
+    grand_opening: {
+      start: {
+        left: "mascot",
+        right: "owner",
+        sceneClass: "grow",
+        beats: [
+          {
+            speaker: "Haven Mascot",
+            title: "Welcome To The Haven",
+            line: "First rule of High Society: keep the plants happy, the customers happier, and the heat off the front door."
+          },
+          {
+            speaker: ownerName,
+            title: "First Day Nerves",
+            line: "We plant, harvest, stock the counter, and act like the sign outside has always worked."
+          }
+        ]
+      },
+      complete: {
+        left: "mascot",
+        right: "owner",
+        sceneClass: "counter",
+        beats: [
+          {
+            speaker: "Haven Mascot",
+            title: "First Sales",
+            line: "We grew, stocked, sold, and only mildly panicked. That is basically a business plan with shoes."
+          }
+        ]
+      }
+    },
+    build_the_vibe: {
+      start: {
+        left: "velma",
+        right: "owner",
+        sceneClass: "lounge",
+        beats: [
+          {
+            speaker: "Velma Vibe",
+            title: "A Room With A Pulse",
+            line: "People can buy and leave anywhere. Give them a couch, a glow, and a reason to text their friends."
+          },
+          {
+            speaker: ownerName,
+            title: "Comfort Sells",
+            line: "The lounge needs to feel like the neighborhood living room, with fewer mysterious remotes."
+          }
+        ]
+      },
+      complete: {
+        left: "mascot",
+        right: "velma",
+        sceneClass: "lounge",
+        beats: [
+          {
+            speaker: "Haven Mascot",
+            title: "Vibe Online",
+            line: "The room finally feels like a place, not just a counter with ambition."
+          }
+        ]
+      }
+    },
+    munchies_make_money: {
+      start: {
+        left: "nova",
+        right: "owner",
+        sceneClass: "snack",
+        beats: [
+          {
+            speaker: "Nova Sweets",
+            title: "Snack Economics",
+            line: "Hungry customers are not a problem. They are a menu opportunity with crunch."
+          },
+          {
+            speaker: "Haven Mascot",
+            title: "The Snack Bar Exists",
+            line: "Open it with Snack Bar Level 1, then press Snack Rush. The story cannot get stuck if the chips keep moving."
+          }
+        ]
+      },
+      complete: {
+        left: "nova",
+        right: "mascot",
+        sceneClass: "snack",
+        beats: [
+          {
+            speaker: "Nova Sweets",
+            title: "Crunch Confirmed",
+            line: "Snack revenue is real. I would like a dramatic entrance, a better cooler, and exactly no questions about the nacho machine."
+          }
+        ]
+      }
+    },
+    the_stage_is_set: {
+      start: {
+        left: "rico",
+        right: "owner",
+        sceneClass: "stage",
+        beats: [
+          {
+            speaker: "Rico Reyes",
+            title: "Mic Check",
+            line: "A good shop sells product. A great Haven gives people a story to tell, preferably one with a working microphone."
+          },
+          {
+            speaker: ownerName,
+            title: "Entertainment In",
+            line: "We build the stage, run the event, and pretend open mic confidence is a renewable resource."
+          }
+        ]
+      },
+      complete: {
+        left: "rico",
+        right: "mascot",
+        sceneClass: "stage",
+        beats: [
+          {
+            speaker: "Rico Reyes",
+            title: "Crowd Warmed Up",
+            line: "Open mic survived. Nobody tripped over the speaker cable. High art."
+          }
+        ]
+      }
+    },
+    heat_on_the_block: {
+      start: {
+        left: "vale",
+        right: "owner",
+        sceneClass: "heat",
+        beats: [
+          {
+            speaker: "Officer Vale",
+            title: "Friendly Visit",
+            line: "The warning light is not a decoration. Keep the line calm, the room tidy, and the paperwork where humans can find it."
+          },
+          {
+            speaker: "Haven Mascot",
+            title: "Dash Of Drama",
+            line: "Congratulations. The city noticed us. That is either fame or paperwork. Usually both."
+          }
+        ]
+      },
+      complete: {
+        left: "jules",
+        right: "owner",
+        sceneClass: "security",
+        beats: [
+          {
+            speaker: "Jules Park",
+            title: "Orderly Enough",
+            line: "Clean lines, calm room, paperwork handled. I may have smiled for half a second. No witnesses."
+          }
+        ]
+      }
+    }
+  };
+
+  const scripted = scripts[quest.id]?.[mode];
+  if (scripted) {
+    return {
+      title: mode === "complete" ? `${quest.title} Complete` : quest.title,
+      location: quest.chapter || "Daily Loop",
+      ...scripted
+    };
+  }
+
+  return {
+    title: mode === "complete" ? `${quest.title} Complete` : quest.title,
+    location: quest.chapter || "Daily Loop",
+    sceneClass: mode === "complete" ? "counter" : "cast",
+    left: "mascot",
+    right: "owner",
+    beats: [
+      {
+        speaker: "Haven Mascot",
+        title: quest.title,
+        line: mode === "complete" ? quest.completeLine : quest.startLine
+      }
+    ]
+  };
+}
+
+function cutsceneForGate(quest, mode = "start") {
+  const npcKey = characterKeyForNpc(quest.npc);
+  const detail = roomDetailDefs.find((item) => item.upgrade === quest.key && item.level === quest.nextLevel)
+    || upcomingRoomDetail(quest.key);
+  if (mode === "complete") {
+    return {
+      title: `${quest.upgradeLabel} Level ${quest.nextLevel}`,
+      location: "Upgrade Story",
+      sceneClass: "gate-complete",
+      left: npcKey,
+      right: "owner",
+      beats: [
+        {
+          speaker: quest.npc,
+          title: detail ? `${detail.label} Installed` : "Upgrade Installed",
+          line: `${quest.rewardText} The room should look busier now, because it earned the extra detail.`
+        },
+        {
+          speaker: "Haven Mascot",
+          title: "Story Gate Cleared",
+          line: "Every fifth upgrade should feel like meeting someone, finding pieces, and making the place more alive. This one counts."
+        }
+      ]
+    };
+  }
+
+  return {
+    title: quest.title,
+    location: `${quest.upgradeLabel} Level ${quest.nextLevel}`,
+    sceneClass: "gate",
+    left: npcKey,
+    right: "owner",
+    beats: [
+      {
+        speaker: quest.npc,
+        title: "New Contact",
+        line: quest.dialogue
+      },
+      {
+        speaker: "Haven Mascot",
+        title: "Find The Pieces",
+        line: `Serve customers, keep the loop moving, and use Find Piece when it appears. Then ${quest.npc} can install the upgrade.`
+      }
+    ]
+  };
+}
+
+function setCutsceneCharacter(container, value) {
+  const character = resolveCharacter(value);
+  container.innerHTML = "";
+  container.appendChild(createCharacterBust(character));
+  const label = document.createElement("span");
+  label.className = "cutscene-name";
+  label.textContent = character.name;
+  container.appendChild(label);
+}
+
+function renderCutsceneBeat() {
+  if (!activeCutscene) return;
+  const beat = activeCutscene.beats[cutsceneIndex] || activeCutscene.beats[0];
+  el.cutsceneTitle.textContent = activeCutscene.title;
+  el.cutsceneSceneLabel.textContent = activeCutscene.location || "The Haven";
+  el.cutsceneStage.className = `cutscene-stage ${activeCutscene.sceneClass || "cast"}`;
+  setCutsceneCharacter(el.cutsceneLeft, beat.left || activeCutscene.left || "mascot");
+  setCutsceneCharacter(el.cutsceneRight, beat.right || activeCutscene.right || "owner");
+  el.cutsceneSpeaker.textContent = beat.speaker || "Haven Mascot";
+  el.cutsceneBeatTitle.textContent = beat.title || activeCutscene.title;
+  el.cutsceneLine.textContent = beat.line || "";
+  el.cutsceneNext.textContent = cutsceneIndex >= activeCutscene.beats.length - 1 ? "Done" : "Next";
+}
+
+function showCutscene(cutscene) {
+  if (!cutscene || !cutscene.beats?.length) return;
+  if (el.modalBackdrop.classList.contains("visible")) closeDialogue(false);
+  activeCutscene = cutscene;
+  cutsceneIndex = 0;
+  el.cutsceneBackdrop.classList.add("visible");
+  el.cutsceneBackdrop.setAttribute("aria-hidden", "false");
+  renderCutsceneBeat();
+}
+
+function advanceCutscene() {
+  if (!activeCutscene) return;
+  if (cutsceneIndex < activeCutscene.beats.length - 1) {
+    cutsceneIndex += 1;
+    renderCutsceneBeat();
+    return;
+  }
+  closeCutscene(true);
+}
+
+function closeCutscene(runAction = true) {
+  const action = activeCutscene?.action;
+  el.cutsceneBackdrop.classList.remove("visible");
+  el.cutsceneBackdrop.setAttribute("aria-hidden", "true");
+  activeCutscene = null;
+  cutsceneIndex = 0;
+  if (runAction && typeof action === "function") action();
+}
+
 function optionFor(group, key) {
   return avatarOptions[group].find((option) => option.key === key) || avatarOptions[group][0];
 }
@@ -890,12 +1553,7 @@ function currentStoryQuest() {
       state.storyQuestsStarted[id] = snapshotMetrics();
       if (state.tutorialSeen) {
         setTimeout(() => {
-          showDialogue({
-            speaker: "Mascot",
-            title: template.title,
-            text: template.startLine,
-            primary: "Let's Go"
-          });
+          showCutscene(cutsceneForStory({ ...template, id, repeatable: true }, "start"));
         }, 400);
       }
     }
@@ -908,12 +1566,7 @@ function currentStoryQuest() {
     state.storyQuestsStarted[quest.id] = snapshotMetrics();
     if (state.tutorialSeen) {
       setTimeout(() => {
-        showDialogue({
-          speaker: "Mascot",
-          title: quest.title,
-          text: quest.startLine,
-          primary: "Let's Go"
-        });
+        showCutscene(cutsceneForStory(quest, "start"));
       }, 400);
     }
   }
@@ -979,12 +1632,7 @@ function completeStoryQuest(quest) {
   state.favor = clamp(state.favor + (rewards.favor || 0), 0, 100);
   state.completedStory[quest.id] = true;
   addLog(quest.title, quest.completeLine);
-  showDialogue({
-    speaker: "Mascot",
-    title: `${quest.title} Complete`,
-    text: quest.completeLine,
-    primary: "Continue"
-  });
+  showCutscene(cutsceneForStory(quest, "complete"));
   if (quest.repeatable) {
     state.dailyQuestIndex += 1;
     state.dailyQuestRound = (state.dailyQuestRound || 1) + 1;
@@ -1141,12 +1789,7 @@ function startGateQuest(key, nextLevel) {
   };
 
   addLog(questDef.title, `${questDef.npc} entered the story. ${questDef.description}`);
-  showDialogue({
-    speaker: questDef.npc,
-    title: questDef.title,
-    text: questDef.dialogue,
-    primary: "Start Quest"
-  });
+  showCutscene(cutsceneForGate(state.activeGateQuest, "start"));
   renderAll();
 }
 
@@ -1176,12 +1819,7 @@ function completeGateQuest(quest) {
   state.favor = clamp(state.favor + (quest.key === "security" ? 6 : 1), 0, 100);
   addXp(35 + quest.nextLevel);
   addLog(quest.title, `${quest.rewardText} ${quest.npc} is now part of The Haven's network.`);
-  showDialogue({
-    speaker: "Mascot",
-    title: `${quest.upgradeLabel} Level ${quest.nextLevel}`,
-    text: `Quest complete. The upgrade is installed, the room looks better, and somehow the mascot was right again.`,
-    primary: "Done"
-  });
+  showCutscene(cutsceneForGate(quest, "complete"));
   renderAll();
 }
 
@@ -1514,14 +2152,14 @@ function spawnCustomer(forceEventFan = false, forceSpy = false, preferredTypeNam
 }
 
 function customerTarget(customer) {
-  if (customer.state === "entering") return { x: 94, y: 61 };
-  if (customer.state === "checking") return { x: 65, y: 28 };
-  if (customer.state === "buying") return { x: 62, y: 28 };
-  if (customer.state === "lounging") return { x: 66 + Math.random() * 10, y: 51 + Math.random() * 8 };
-  if (customer.state === "snacking") return { x: 86, y: 31 };
-  if (customer.state === "watching") return { x: 82, y: 74 };
-  if (customer.state === "complaining") return { x: 70, y: 36 };
-  return { x: 96, y: 78 };
+  if (customer.state === "entering") return { x: 96, y: 42 };
+  if (customer.state === "checking") return { x: 64, y: 18 };
+  if (customer.state === "buying") return { x: 61, y: 18 };
+  if (customer.state === "lounging") return { x: 65 + Math.random() * 11, y: 42 + Math.random() * 7 };
+  if (customer.state === "snacking") return { x: 88, y: 18 };
+  if (customer.state === "watching") return { x: 82, y: 76 };
+  if (customer.state === "complaining") return { x: 72, y: 31 };
+  return { x: 96, y: 72 };
 }
 
 function setCustomerState(customer, nextState) {
@@ -1803,12 +2441,17 @@ function renderUpgrades() {
     const gateKey = `${key}:${nextLevel}`;
     const isGate = nextLevel % 5 === 0 && !state.completedGates[gateKey];
     const cost = getUpgradeCost(key);
+    const nextVisual = upcomingRoomDetail(key);
+    const visualText = nextVisual
+      ? `Next visual: ${nextVisual.label} at Lv. ${nextVisual.level}`
+      : "Visual detail set is fully unlocked for this prototype";
     const item = document.createElement("div");
-    item.className = `upgrade-item ${isGate ? "story-gate" : ""}`;
+    item.className = `upgrade-item upgrade-tier-${clamp(level, 0, 5)} ${isGate ? "story-gate" : ""}`;
     item.innerHTML = `
       <div>
         <span class="upgrade-name">${def.label} Lv. ${level}</span>
         <span class="upgrade-meta">${def.zone} - ${isGate ? `Story quest with ${def.npc}` : `${def.effect} Cost ${moneyText(cost)}`}</span>
+        <span class="upgrade-visual">${visualText}</span>
       </div>
     `;
     const button = document.createElement("button");
@@ -2092,7 +2735,7 @@ function renderAnimatedLayer() {
   addPerson({
     className: "owner",
     x: 73,
-    y: 38,
+    y: 34,
     skin: owner.skin,
     shirt: owner.shirt,
     hairColor: owner.hairColor,
@@ -2102,19 +2745,19 @@ function renderAnimatedLayer() {
   });
 
   if (state.staff.grower > 0) {
-    addPerson({ className: "staff", x: 27, y: 51, skin: "#b87355", shirt: "#4fd59b" });
+    addPerson({ className: "staff", x: 26, y: 30, skin: "#b87355", shirt: "#4fd59b" });
   }
   if (state.staff.cashier > 0) {
-    addPerson({ className: "staff", x: 61, y: 26, skin: "#c98c68", shirt: "#3dc9d4" });
+    addPerson({ className: "staff", x: 62, y: 18, skin: "#c98c68", shirt: "#3dc9d4" });
   }
   if (state.staff.host > 0) {
-    addPerson({ className: "staff", x: 67, y: 54, skin: "#f0bf8f", shirt: "#ff5e93" });
+    addPerson({ className: "staff", x: 68, y: 44, skin: "#f0bf8f", shirt: "#ff5e93" });
   }
   if (state.staff.snackWorker > 0) {
-    addPerson({ className: "staff", x: 86, y: 30, skin: "#9e604b", shirt: "#f5b84b" });
+    addPerson({ className: "staff", x: 87, y: 18, skin: "#9e604b", shirt: "#f5b84b" });
   }
   if (state.staff.security > 0) {
-    addPerson({ className: "security", x: 61, y: 78, skin: "#9b684e", shirt: "#26324d" });
+    addPerson({ className: "security", x: 62, y: 80, skin: "#9b684e", shirt: "#26324d" });
   }
 
   state.customers.forEach((customer) => {
@@ -2170,8 +2813,8 @@ function renderHud() {
   el.stockBadge.textContent = `Stock ${state.inventory.shelfStock} - ${counterStockSummary()}`;
   const growLevel = Math.floor((state.upgrades.growLights + state.upgrades.plantRows) / 2);
   const storeLevel = Math.floor((state.upgrades.counter + state.upgrades.lounge + state.upgrades.snackBar + state.upgrades.stage + state.upgrades.security) / 5);
-  el.growRoomLevel.textContent = `Room Lv. ${Math.max(1, growLevel)}`;
-  el.storeRoomLevel.textContent = `Store Lv. ${Math.max(1, storeLevel + 1)}`;
+  el.growRoomLevel.textContent = `Warehouse Lv. ${Math.max(1, growLevel)}`;
+  el.storeRoomLevel.textContent = `Block Lv. ${Math.max(1, storeLevel + 1)}`;
 
   if (state.activeEventSeconds > 0) {
     el.sceneMood.textContent = `Event live: ${Math.ceil(state.activeEventSeconds)}s`;
@@ -2217,8 +2860,11 @@ function renderAll() {
   renderAvatar();
   renderCloset();
   renderSeedVault();
+  renderRoomExpansion();
   renderPlants();
   renderUpgrades();
+  renderRoomDetails();
+  renderCastBoard();
   renderQuest();
   renderTutorial();
   renderCrew();
@@ -2266,20 +2912,10 @@ function closeDialogue(runAction = false) {
 function showStoryBrief() {
   const quest = displayedQuest();
   if (quest.isGateQuest) {
-    showDialogue({
-      speaker: quest.npc,
-      title: quest.title,
-      text: `${quest.dialogue} Reward: ${quest.rewardText}`,
-      primary: "Back"
-    });
+    showCutscene(cutsceneForGate(quest, "start"));
     return;
   }
-  showDialogue({
-    speaker: "Mascot",
-    title: quest.title,
-    text: quest.startLine,
-    primary: "Back"
-  });
+  showCutscene(cutsceneForStory(quest, "start"));
 }
 
 function tutorialSteps() {
@@ -2368,6 +3004,7 @@ function renderTutorial() {
 }
 
 function showTutorialIntro() {
+  const shouldShowOpening = state.storyQuestIndex === 0 && !state.completedStory.grand_opening && state.metrics.planted === 0;
   showDialogue({
     speaker: "Mascot",
     title: "How The Haven Starts",
@@ -2377,6 +3014,9 @@ function showTutorialIntro() {
       state.tutorialSeen = true;
       saveState();
       renderTutorial();
+      if (shouldShowOpening) {
+        setTimeout(() => showCutscene(cutsceneForStory(displayedQuest(), "start")), 180);
+      }
     }
   });
 }
@@ -2399,10 +3039,16 @@ function bindEvents() {
   el.avatarAccessorySelect.addEventListener("change", updateAvatarFromControls);
   el.avatarPersonalitySelect.addEventListener("change", updateAvatarFromControls);
   el.avatarRandomButton.addEventListener("click", randomizeAvatar);
+  el.castSceneButton.addEventListener("click", showCastIntroScene);
   el.modalPrimary.addEventListener("click", () => closeDialogue(true));
   el.modalSecondary.addEventListener("click", () => closeDialogue(false));
   el.modalBackdrop.addEventListener("click", (event) => {
     if (event.target === el.modalBackdrop) closeDialogue(false);
+  });
+  el.cutsceneNext.addEventListener("click", advanceCutscene);
+  el.cutsceneSkip.addEventListener("click", () => closeCutscene(false));
+  el.cutsceneBackdrop.addEventListener("click", (event) => {
+    if (event.target === el.cutsceneBackdrop) closeCutscene(false);
   });
 }
 

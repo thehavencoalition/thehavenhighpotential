@@ -53,9 +53,16 @@
         </div>
 
         <div class="scene" id="scene">
+          <div class="town-road main-street"></div>
+          <div class="town-road cross-street"></div>
+          <div class="town-plaza">Town Square</div>
+          <div class="town-prop city-hall">City Hall</div>
+          <div class="town-prop community-park">Park</div>
+          <div class="town-prop delivery-yard">Delivery</div>
+          <div class="town-prop mural-wall">Mural</div>
           <div class="room grow-room">
             <div class="room-header">
-              <span>Grow Side</span>
+              <span>Grow Warehouse</span>
               <strong id="growRoomLevel">Room Lv. 1</strong>
             </div>
             <div class="grow-fixtures">
@@ -63,6 +70,9 @@
               <div class="fixture fan"></div>
               <div class="fixture nutrient-station"></div>
             </div>
+            <div class="grow-detail irrigation-line">Irrigation</div>
+            <div class="grow-detail genetics-lab">Genetics</div>
+            <div class="grow-detail harvest-crates">Crates</div>
             <div class="plant-grid" id="plantGrid"></div>
             <div class="workbench curing">Curing</div>
             <div class="workbench trimming">Trim</div>
@@ -70,29 +80,45 @@
 
           <div class="room haven-room">
             <div class="room-header">
-              <span>Haven Side</span>
+              <span>Haven Block</span>
               <strong id="storeRoomLevel">Store Lv. 1</strong>
             </div>
             <div class="counter-zone" id="counterZone">
-              <span>Counter</span>
+              <span>Haven Bar</span>
               <small id="stockBadge">Stock 0</small>
             </div>
+            <div class="bar-back-shelf" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="bar-display-cases" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="bar-stools" aria-hidden="true">
+              <b></b><b></b><b></b><b></b>
+            </div>
+            <div class="digital-menu">Menu</div>
             <div class="lounge-zone">
               <span>Lounge</span>
               <div class="seat-row">
                 <b></b><b></b><b></b>
               </div>
             </div>
+            <div class="neon-wall">Vibe</div>
+            <div class="arcade-cab">Play</div>
             <div class="snack-zone">
               <span>Snack Bar</span>
               <i></i><i></i><i></i>
             </div>
+            <div class="snack-cooler">Cooler</div>
             <div class="stage-zone">
               <span>Stage</span>
               <div class="speaker left"></div>
               <div class="speaker right"></div>
             </div>
+            <div class="stage-lights">Lights</div>
             <div class="security-zone">Security</div>
+            <div class="camera-node">Cam</div>
+            <div class="vip-zone">VIP</div>
           </div>
 
           <div class="animated-layer" id="animatedLayer"></div>
@@ -171,6 +197,22 @@
           </div>
           <div id="seedSummary" class="seed-summary"></div>
           <div id="seedCollection" class="seed-grid"></div>
+        </section>
+
+        <section class="panel-card cast-card">
+          <div class="panel-title">
+            <span>Cast Board</span>
+            <button id="castSceneButton" class="small-button">Scene</button>
+          </div>
+          <div id="castGrid" class="cast-grid"></div>
+        </section>
+
+        <section class="panel-card room-card">
+          <div class="panel-title">
+            <span>Room Details</span>
+            <strong id="roomDetailCount">0 active</strong>
+          </div>
+          <div id="roomDetailList" class="room-detail-list"></div>
         </section>
 
         <section class="panel-card avatar-card">
@@ -266,6 +308,33 @@
       <div class="modal-actions">
         <button id="modalSecondary" class="ghost-button">Close</button>
         <button id="modalPrimary">Start</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="cutscene-backdrop" id="cutsceneBackdrop" aria-hidden="true">
+    <article class="cutscene-modal" role="dialog" aria-modal="true" aria-labelledby="cutsceneTitle">
+      <div class="cutscene-stage" id="cutsceneStage">
+        <div class="cutscene-location">
+          <span id="cutsceneSceneLabel">Original Haven</span>
+          <strong id="cutsceneTitle">Grand Opening</strong>
+        </div>
+        <div class="cutscene-character left" id="cutsceneLeft"></div>
+        <div class="cutscene-set">
+          <span class="set-counter"></span>
+          <span class="set-plant"></span>
+          <span class="set-light"></span>
+        </div>
+        <div class="cutscene-character right" id="cutsceneRight"></div>
+      </div>
+      <div class="cutscene-script">
+        <p id="cutsceneSpeaker">Mascot</p>
+        <h2 id="cutsceneBeatTitle">Welcome to The Haven</h2>
+        <p id="cutsceneLine"></p>
+      </div>
+      <div class="cutscene-actions">
+        <button id="cutsceneSkip" class="ghost-button">Skip</button>
+        <button id="cutsceneNext">Next</button>
       </div>
     </article>
   </div>
