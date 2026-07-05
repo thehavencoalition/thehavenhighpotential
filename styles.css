@@ -455,40 +455,12 @@ h1 {
   transform-style: preserve-3d;
 }
 
-.scene-concept,
-.room-concept-art {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  user-select: none;
-}
-
-.scene-concept {
-  z-index: 0;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 1320px;
-  object-fit: cover;
-  object-position: center top;
-  filter: saturate(1.08) contrast(1.02);
-  opacity: 0;
-}
-
-.room-concept-art {
-  z-index: 0 !important;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(1.06) brightness(1.02);
-  opacity: 0;
-}
-
 .scene.concept-art-mode {
-  background: #172033;
+  background:
+    linear-gradient(180deg, rgba(23, 32, 51, 0.03), rgba(23, 32, 51, 0.12)),
+    url("assets/mockups/concept-town-map.png") center top / cover no-repeat,
+    #172033;
+  animation: townBackdropDrift 24s ease-in-out infinite alternate;
 }
 
 .scene.concept-art-mode::before {
@@ -501,10 +473,6 @@ h1 {
 
 .scene.concept-art-mode::after {
   display: none;
-}
-
-.scene.concept-art-mode .scene-concept {
-  opacity: 0.94;
 }
 
 .scene.concept-art-mode .town-road,
@@ -528,6 +496,7 @@ h1 {
     0 0 0 4px rgba(61, 201, 212, 0.14),
     0 10px 22px rgba(23, 32, 51, 0.2);
   text-shadow: 0 2px 0 rgba(23, 32, 51, 0.55);
+  animation: hotspotIdle 3.8s ease-in-out infinite alternate;
 }
 
 .scene.concept-art-mode .town-plaza {
@@ -550,15 +519,44 @@ h1 {
     0 0 0 9px rgba(255, 255, 255, 0.42),
     0 0 36px rgba(61, 201, 212, 0.45),
     0 16px 30px rgba(23, 32, 51, 0.28);
+  animation: hotspotSelected 950ms ease-in-out infinite alternate;
 }
 
 .scene.concept-art-mode .room {
+  --room-art-x: 50%;
+  --room-art-y-start: 48%;
+  --room-art-y-end: 52%;
   overflow: hidden;
   border-color: rgba(255, 255, 255, 0.56);
-  background: rgba(23, 32, 51, 0.42);
+  background-color: rgba(23, 32, 51, 0.42);
+  background-position: center center, var(--room-art-x) var(--room-art-y-start);
+  background-repeat: no-repeat;
+  background-size: cover;
   box-shadow:
     0 0 0 5px rgba(255, 255, 255, 0.24),
     0 18px 38px rgba(23, 32, 51, 0.34);
+  animation: roomBackdropFloat 16s ease-in-out infinite alternate;
+}
+
+.scene.concept-art-mode .room.town-lot:hover {
+  filter: saturate(1.06) brightness(1.03);
+}
+
+.scene.concept-art-mode .grow-room {
+  --room-art-y-start: 43%;
+  --room-art-y-end: 48%;
+  background-image:
+    linear-gradient(180deg, rgba(23, 32, 51, 0.03), rgba(23, 32, 51, 0.12)),
+    url("assets/mockups/concept-grow-room.png");
+}
+
+.scene.concept-art-mode .haven-room {
+  --room-art-y-start: 50%;
+  --room-art-y-end: 55%;
+  background-image:
+    linear-gradient(180deg, rgba(23, 32, 51, 0.04), rgba(23, 32, 51, 0.14)),
+    url("assets/mockups/concept-haven-bar.png");
+  animation-delay: -5s;
 }
 
 .scene.concept-art-mode .room::before {
@@ -571,15 +569,11 @@ h1 {
     linear-gradient(180deg, rgba(23, 32, 51, 0.08), rgba(23, 32, 51, 0.16)),
     radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.18), transparent 30%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
-  animation: none;
+  animation: roomLightSweep 7s ease-in-out infinite alternate;
 }
 
 .scene.concept-art-mode .room::after {
   display: none;
-}
-
-.scene.concept-art-mode .room-concept-art {
-  opacity: 0.9;
 }
 
 .scene.concept-art-mode .room-wall,
@@ -4403,6 +4397,59 @@ h1 {
   }
 }
 
+@keyframes townBackdropDrift {
+  from {
+    background-position: center top, center top, center top;
+    filter: saturate(1.02) brightness(1);
+  }
+  to {
+    background-position: center top, center 8px, center top;
+    filter: saturate(1.08) brightness(1.03);
+  }
+}
+
+@keyframes roomBackdropFloat {
+  from {
+    background-position: center center, var(--room-art-x) var(--room-art-y-start);
+  }
+  to {
+    background-position: center center, var(--room-art-x) var(--room-art-y-end);
+  }
+}
+
+@keyframes roomLightSweep {
+  from {
+    opacity: 0.78;
+    background-position: 0 0, 0 0;
+  }
+  to {
+    opacity: 0.96;
+    background-position: 18px 0, 0 0;
+  }
+}
+
+@keyframes hotspotIdle {
+  from {
+    filter: saturate(1) brightness(1);
+    transform: translateY(0);
+  }
+  to {
+    filter: saturate(1.08) brightness(1.06);
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes hotspotSelected {
+  from {
+    filter: saturate(1.08) brightness(1.04);
+    transform: translateY(-1px) scale(1);
+  }
+  to {
+    filter: saturate(1.2) brightness(1.12);
+    transform: translateY(-3px) scale(1.015);
+  }
+}
+
 @keyframes roadShimmer {
   from {
     transform: translateY(-36px);
@@ -4474,6 +4521,17 @@ h1 {
   }
   to {
     transform: translateY(-5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene.concept-art-mode,
+  .scene.concept-art-mode .room,
+  .scene.concept-art-mode .room::before,
+  .scene.concept-art-mode .town-prop,
+  .scene.concept-art-mode .town-plaza,
+  .scene.concept-art-mode .town-lot.selected {
+    animation: none;
   }
 }
 
